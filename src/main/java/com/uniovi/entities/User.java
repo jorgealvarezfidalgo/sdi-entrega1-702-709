@@ -13,7 +13,7 @@ public class User {
 	@GeneratedValue
 	private long id;
 	@Column(unique = true)
-	private String dni;
+	private String username;
 	private String name;
 	private String lastName;
 	private String role;
@@ -22,9 +22,9 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	public User(String dni, String name, String lastName) {
+	public User(String username, String name, String lastName) {
 		super();
-		this.dni = dni;
+		this.username = username;
 		this.name = name;
 		this.lastName = lastName;
 	}
@@ -40,12 +40,12 @@ public class User {
 		this.id = id;
 	}
 
-	public String getDni() {
-		return dni;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setDni(String dni) {
-		this.dni = dni;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getName() {
