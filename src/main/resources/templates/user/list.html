@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2 th:text="#{users.message}"></h2>
+		<p th:text="#{currentusers.message}"></p>
+		<div class="table-responsive">
+			<table class="table table-hover">
+				<thead>
+					<tr>
+						<th>Email</th>
+						<th th:text="#{name.message}"></th>
+						<th th:text="#{surname.message}"></th>
+						<th class="col-md-1"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${usersList}">
+						<td th:text="${user.email}">nombre@email.com</td>
+						<td th:text="${user.name}">Nombre del usuario</td>
+						<td th:text="${user.lastName}">Apellidos del usuario</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		 <footer th:replace="fragments/pagination"/> 
+	</div>
+
+	<footer th:replace="fragments/footer" />
+
+</body>
+</html>

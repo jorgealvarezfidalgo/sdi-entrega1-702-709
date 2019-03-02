@@ -8,7 +8,7 @@ import com.uniovi.entities.User;
 
 public interface UsersRepository extends CrudRepository<User, Long> {
 
-	User findByUsername(String username);
+	User findByEmail(String email);
 
 	String findByPassword(String password);
 	

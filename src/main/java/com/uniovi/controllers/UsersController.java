@@ -2,18 +2,21 @@ package com.uniovi.controllers;
 
 import java.util.LinkedList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -38,6 +41,15 @@ public class UsersController {
 	
 	@Autowired
 	private SecurityService securityService;
+	
+	@RequestMapping("/user/list")
+	public String getListado(Model model, Pageable pageable) {
+		Page<User> users = new PageImpl<User>(new LinkedList<User>()); 
+		users = usersService.getUsers(pageable);
+		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		return "user/list";
+	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
 	public String signup(Model model) {
@@ -55,7 +67,8 @@ public class UsersController {
 		user.setRole(rolesService.getRoles()[0]);
 
 		usersService.addUser(user);
-		securityService.autoLogin(user.getUsername(), user.getPasswordConfirm());
+		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
+		
 		return "redirect:home";
 	}
 
@@ -65,11 +78,21 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(Model model) {
-		//Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		//String username = auth.getName();
-		//User activeUser = usersService.getUserByUsername(username);
+	public String home(HttpSession session, Model model) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		User activeUser = usersService.getUserByEmail(email);
 		//model.addAttribute("markList", activeUser.getOffers());
+		session.setAttribute("saldo", activeUser.getSaldo());
 		return "home";
+	}
+	
+	@RequestMapping(value="/logout", method = RequestMethod.GET)
+	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+	    if (auth != null){    
+	        new SecurityContextLogoutHandler().logout(request, response, auth);
+	    }
+	    return "redirect:login";
 	}
 }
