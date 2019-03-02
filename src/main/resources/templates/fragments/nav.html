@@ -13,6 +13,15 @@
 		
 		<div class="collapse navbar-collapse" id="myNavbar">
 		<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+		<li id="offers-menu" class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a class="dropdown-toggle" id="offerdropdown"
+					data-toggle="dropdown" href="#" th:text="#{offersmanager.message}"><span
+						class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li sec:authorize="hasRole('ROLE_USER')"><a 
+							href="/offer/add" id="addoffer" th:text="#{addoffer.message}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a href="/offer/listown" 
+						th:text="#{seeownoffer.message}"></a></li>
+					</ul></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a id="userdropdown"
 					class="dropdown-toggle" data-toggle="dropdown" href="#"
