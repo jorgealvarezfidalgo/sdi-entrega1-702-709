@@ -1,5 +1,6 @@
 package com.uniovi.controllers;
 
+import java.security.Principal;
 import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -17,6 +18,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -44,11 +46,23 @@ public class UsersController {
 	
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable) {
-		Page<User> users = new PageImpl<User>(new LinkedList<User>()); 
-		users = usersService.getUsers(pageable);
+		Page<User> users = usersService.getUsers(pageable);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "user/list";
+	}
+	
+	@RequestMapping("/user/list/update")
+	public String updateList(Model model, Pageable pageable, Principal principal) {
+		Page<User> users = usersService.getUsers(pageable);
+		model.addAttribute("usersList", users.getContent());
+		return "user/list :: tableUsers";
+	}
+	
+	@RequestMapping("/user/delete/{id}")
+	public String delete(@PathVariable Long id) {
+		usersService.deleteUser(id);
+		return "redirect:/user/list";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
