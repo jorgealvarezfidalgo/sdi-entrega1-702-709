@@ -17,6 +17,7 @@
 						<th th:text="#{title.message}"></th>
 						<th th:text="#{description.message}"></th>
 						<th th:text="#{cost.message}"></th>
+						<th th:text="#{date.message}"></th>
 						<th class="col-md-1"></th>
 					</tr>
 				</thead>
@@ -25,6 +26,7 @@
 						<td th:text="${offer.title}">A</td>
 						<td th:text="${offer.description}">B</td>
 						<td th:text="${offer.cost}">10</td>
+						<td th:text="${offer.date}">10-05-1453</td>
 						<td><a th:href="${'/offer/delete/' + offer.id}" th:text="#{delete.message}"></a></td>
 					</tr>
 				</tbody>

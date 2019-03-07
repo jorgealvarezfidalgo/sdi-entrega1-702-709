@@ -6,12 +6,15 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -47,16 +50,19 @@ public class OffersControllers {
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String setOffer(@Validated @ModelAttribute Offer offer, BindingResult result, Model model) {
+	public String setOffer(@Validated @ModelAttribute Offer offer, BindingResult result, Model model, Principal principal) {
 		offerFormValidator.validate(offer, result);
 		if (result.hasErrors()) {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date today = new Date(System.currentTimeMillis()); 
 			String todayAsString = df.format(today);
-			model.addAttribute("today", todayAsString);
+			model.addAttribute("currentDate", todayAsString);
 			model.addAttribute("usersList", usersService.getUsers());
 			return "offer/add";
 		}
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		offer.setUser(user);
 		offersService.addOffer(offer);
 		return "redirect:/offer/listown";
 	}
@@ -75,7 +81,8 @@ public class OffersControllers {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = new Date(System.currentTimeMillis()); 
 		String todayAsString = df.format(today);
-		model.addAttribute("today", todayAsString);
+		System.out.println(todayAsString);
+		model.addAttribute("currentDate", todayAsString);
 		return "offer/add";
 	}
 
@@ -86,6 +93,12 @@ public class OffersControllers {
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/list :: tableOffers";
+	}
+	
+	@InitBinder     
+	public void initBinder(WebDataBinder binder){
+	     binder.registerCustomEditor(       Date.class,     
+	                         new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true, 10));   
 	}
 
 }
