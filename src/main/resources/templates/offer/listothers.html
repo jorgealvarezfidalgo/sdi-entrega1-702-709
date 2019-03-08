@@ -9,6 +9,13 @@
 
 	<div class="container">
 		<h2 th:text="#{othersoffers.message}"></h2>
+		<form class="navbar-form" action="/offer/listothers">
+			<div class="form-group">
+				<input name="searchText" type="text" class="form-control" size="50"
+					th:placeholder="#{searchtextbuy.message}">
+			</div>
+			<button type="submit" class="btn btn-default">Buscar</button>
+		</form>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableOffers"
 				id="tableOffers">

@@ -4,10 +4,12 @@ import java.security.Principal;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.LinkedList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
@@ -50,11 +53,12 @@ public class OffersControllers {
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String setOffer(@Validated @ModelAttribute Offer offer, BindingResult result, Model model, Principal principal) {
+	public String setOffer(@Validated @ModelAttribute Offer offer, BindingResult result, Model model,
+			Principal principal) {
 		offerFormValidator.validate(offer, result);
 		if (result.hasErrors()) {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-			Date today = new Date(System.currentTimeMillis()); 
+			Date today = new Date(System.currentTimeMillis());
 			String todayAsString = df.format(today);
 			model.addAttribute("currentDate", todayAsString);
 			model.addAttribute("usersList", usersService.getUsers());
@@ -77,9 +81,9 @@ public class OffersControllers {
 	public String getOffer(Model model) {
 		model.addAttribute("offer", new Offer());
 		model.addAttribute("usersList", usersService.getUsers());
-		
+
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-		Date today = new Date(System.currentTimeMillis()); 
+		Date today = new Date(System.currentTimeMillis());
 		String todayAsString = df.format(today);
 		System.out.println(todayAsString);
 		model.addAttribute("currentDate", todayAsString);
@@ -94,24 +98,28 @@ public class OffersControllers {
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/list :: tableOffers";
 	}
-	
-	@InitBinder     
-	public void initBinder(WebDataBinder binder){
-	     binder.registerCustomEditor(       Date.class,     
-	                         new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true, 10));   
-	}
-	
-	@RequestMapping("/offer/listothers")
-	public String getListOthers(Model model, Pageable pageable, Principal principal) {
-		String email = principal.getName();
-		User user = usersService.getUserByEmail(email);
-		Page<Offer> offers = offersService.getOtherUsersOffers(pageable, user);
 
+	@InitBinder
+	public void initBinder(WebDataBinder binder) {
+		binder.registerCustomEditor(Date.class, new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true, 10));
+	}
+
+	@RequestMapping("/offer/listothers")
+	public String getListOthers(Model model, Pageable pageable, Principal principal,
+			@RequestParam(value = "", required = false) String searchText) {
+		String email = principal.getName();
+		User buyer = usersService.getUserByEmail(email);
+		Page<Offer> offers =  new PageImpl<Offer>(new LinkedList<Offer>()); // offersService.getOtherUsersOffers(pageable, user);
+		if (searchText != null && !searchText.isEmpty()) {
+			offers = offersService.searchOthersOffersByTitle(pageable, searchText, buyer);
+		} else {
+			offers = offersService.getOtherUsersOffers(pageable, buyer);
+		}
 		model.addAttribute("offerList", offers.getContent());
 		model.addAttribute("page", offers);
 		return "offer/listothers";
 	}
-	
+
 	@RequestMapping("/offer/listothers/update")
 	public String updateListOthers(Model model, Pageable pageable, Principal principal) {
 		String email = principal.getName();
@@ -120,20 +128,20 @@ public class OffersControllers {
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/listothers :: tableOffers";
 	}
-	
+
 	@RequestMapping(value = "/offer/{id}/buy", method = RequestMethod.GET)
 	public String buyOffer(Model model, Principal principal, @PathVariable Long id) {
 		String email = principal.getName();
 		User buyer = usersService.getUserByEmail(email);
 		Offer offer = offersService.findById(id);
 		if (buyer.getSaldo() >= offer.getCost()) {
-			buyer.setSaldo(buyer.getSaldo() -  offer.getCost());
+			buyer.setSaldo(buyer.getSaldo() - offer.getCost());
 			offer.setBuyer(buyer);
 			offersService.addOffer(offer);
 			usersService.updateUser(buyer);
-		} 
-		
-		return "redirect:/offer/listothers";	
+		}
+
+		return "redirect:/offer/listothers";
 	}
 
 }

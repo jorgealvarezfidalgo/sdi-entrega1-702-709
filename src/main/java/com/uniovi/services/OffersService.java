@@ -55,6 +55,15 @@ public class OffersService {
 		Offer offer = offersRepository.findById(id).get();
 		return offer;
 	}
+	
+	public Page<Offer> searchOthersOffersByTitle(Pageable pageable, String searchText, User buyer) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		searchText = "%" + searchText + "%";
+		if (buyer.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.searchOthersByTitle(pageable, searchText, buyer);
+		}
+		return offers;
+	}
 
 
 }
