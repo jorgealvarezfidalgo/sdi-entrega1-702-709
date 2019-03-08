@@ -37,7 +37,7 @@
 				id="tableUsers">
 				<thead>
 					<tr>
-						<th>Email</th>
+						<th th:text="#{email.word}"></th>
 						<th th:text="#{name.message}"></th>
 						<th th:text="#{surname.message}"></th>
 						<th class="col-md-1"></th>
@@ -45,13 +45,13 @@
 				</thead>
 				<tbody>
 					<tr th:each="user : ${usersList}">
-						<td th:text="${user.email}">nombre@email.com</td>
-						<td th:text="${user.name}">Nombre del usuario</td>
-						<td th:text="${user.lastName}">Apellidos del usuario</td>
+						<td th:text="#{user.email}">nombre@email.com</td>
+						<td th:text="#{user.name}">Nombre del usuario</td>
+						<td th:text="#{user.lastName}">Apellidos del usuario</td>
 						<td><div>
 								<form>
 									<input type="checkbox" name="delete" value="delete" th:id="${'deleteChk' + user.id}"><label
-										for="${'deleteChk' + user.id}" th:text="#{delete.message}"></label>
+										th:for="${'deleteChk' + user.id}" th:text="#{delete.message}"></label>
 								</form>
 							</div></td>
 					</tr>

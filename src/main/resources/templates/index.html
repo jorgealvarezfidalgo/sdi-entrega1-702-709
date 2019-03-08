@@ -5,7 +5,7 @@
 <body>
 	<nav th:replace="fragments/nav" />
 	<div class="container" style="text-align: center">
-		<h2>Bienvenido</h2> 
+		<h2  th:text="#{welcome.message}"></h2> 
 	</div>
 
 	<footer th:replace="fragments/footer" />

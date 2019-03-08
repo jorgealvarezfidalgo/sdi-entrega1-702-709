@@ -60,7 +60,6 @@ public class InsertSampleDataService {
 				}
 			};
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		user1.setOffers(user1Offers);

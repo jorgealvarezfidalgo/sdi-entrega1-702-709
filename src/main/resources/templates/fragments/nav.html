@@ -46,7 +46,7 @@
 					</ul></li>
 			</ul>
 			<ul class="nav navbar-nav navbar-right">
-
+				
 				<li sec:authorize="isAuthenticated()"><span
 					class="glyphicon glyphicon-email"
 					sec:authentication="principal.username" th:inline="text"></span></li>
@@ -59,11 +59,6 @@
 						<span class="caret"></span>
 				</a>
 					<ul id="languageDropdownMenuButton" class="dropdown-menu">
-						<li><a id="btnEnglish" value="EN"> <img
-								th:src="@{/img/if_uk_flag.png}"
-								style="border: 0; float: left; margin-right: 15px" /> <span
-								th:text="#{language.en}"></span>
-						</a></li>
 						<li><a id="btnSpanish" value="ES"> <img
 								th:src="@{/img/if_spain_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
@@ -73,6 +68,11 @@
 								th:src="@{/img/ru_flag.png}"
 								style="border: 0; float: left; margin-right: 15px" /> <span
 								th:text="#{language.ru}"></span>
+						</a></li>
+						<li><a id="btnEnglish" value="EN"> <img
+								th:src="@{/img/if_uk_flag.png}"
+								style="border: 0; float: left; margin-right: 15px" /> <span
+								th:text="#{language.en}"></span>
 						</a></li>
 					</ul></li>
 				<li sec:authorize="!isAuthenticated()"><a href="/signup"
