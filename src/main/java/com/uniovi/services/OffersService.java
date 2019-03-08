@@ -34,7 +34,6 @@ public class OffersService {
 		offersRepository.deleteById(id);
 	}
 
-
 	public Page<Offer> getOffersForUser(Pageable pageable, User seller) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (seller.getRole().equals("ROLE_USER")) {
@@ -42,7 +41,7 @@ public class OffersService {
 		}
 		return offers;
 	}
-	
+
 	public Page<Offer> getOtherUsersOffers(Pageable pageable, User buyer) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		if (buyer.getRole().equals("ROLE_USER")) {
@@ -55,7 +54,7 @@ public class OffersService {
 		Offer offer = offersRepository.findById(id).get();
 		return offer;
 	}
-	
+
 	public Page<Offer> searchOthersOffersByTitle(Pageable pageable, String searchText, User buyer) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
 		searchText = "%" + searchText + "%";
@@ -65,5 +64,12 @@ public class OffersService {
 		return offers;
 	}
 
+	public Page<Offer> getOffersBought(Pageable pageable, User buyer) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		if (buyer.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.findBoughtByUser(pageable, buyer);
+		}
+		return offers;
+	}
 
 }

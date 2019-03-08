@@ -109,7 +109,8 @@ public class OffersControllers {
 			@RequestParam(value = "", required = false) String searchText) {
 		String email = principal.getName();
 		User buyer = usersService.getUserByEmail(email);
-		Page<Offer> offers =  new PageImpl<Offer>(new LinkedList<Offer>()); // offersService.getOtherUsersOffers(pageable, user);
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>()); // offersService.getOtherUsersOffers(pageable,
+																			// user);
 		if (searchText != null && !searchText.isEmpty()) {
 			offers = offersService.searchOthersOffersByTitle(pageable, searchText, buyer);
 		} else {
@@ -140,8 +141,27 @@ public class OffersControllers {
 			offersService.addOffer(offer);
 			usersService.updateUser(buyer);
 		}
-
+		System.out.println(offer.getBuyer().getEmail());
 		return "redirect:/offer/listothers";
+	}
+
+	@RequestMapping("/offer/listpurchases")
+	public String getListPurchases(Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User buyer = usersService.getUserByEmail(email);
+		Page<Offer> purchases = offersService.getOffersBought(pageable, buyer);
+		model.addAttribute("purchasesList", purchases.getContent());
+		model.addAttribute("page", purchases);
+		return "offer/listpurchases";
+	}
+
+	@RequestMapping("/offer/listpurchases/update")
+	public String updateListPurchases(Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
+		model.addAttribute("offerList", offers.getContent());
+		return "offer/purchaseslist :: tablePurchases";
 	}
 
 }
