@@ -62,7 +62,7 @@ public class OffersControllers {
 		}
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
-		offer.setUser(user);
+		offer.setSeller(user);
 		offersService.addOffer(offer);
 		return "redirect:/offer/listown";
 	}
@@ -99,6 +99,41 @@ public class OffersControllers {
 	public void initBinder(WebDataBinder binder){
 	     binder.registerCustomEditor(       Date.class,     
 	                         new CustomDateEditor(new SimpleDateFormat("yyyy-MM-dd"), true, 10));   
+	}
+	
+	@RequestMapping("/offer/listothers")
+	public String getListOthers(Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = offersService.getOtherUsersOffers(pageable, user);
+
+		model.addAttribute("offerList", offers.getContent());
+		model.addAttribute("page", offers);
+		return "offer/listothers";
+	}
+	
+	@RequestMapping("/offer/listothers/update")
+	public String updateListOthers(Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = offersService.getOtherUsersOffers(pageable, user);
+		model.addAttribute("offerList", offers.getContent());
+		return "offer/listothers :: tableOffers";
+	}
+	
+	@RequestMapping(value = "/offer/{id}/buy", method = RequestMethod.GET)
+	public String buyOffer(Model model, Principal principal, @PathVariable Long id) {
+		String email = principal.getName();
+		User buyer = usersService.getUserByEmail(email);
+		Offer offer = offersService.findById(id);
+		if (buyer.getSaldo() >= offer.getCost()) {
+			buyer.setSaldo(buyer.getSaldo() -  offer.getCost());
+			offer.setBuyer(buyer);
+			offersService.addOffer(offer);
+			usersService.updateUser(buyer);
+		} 
+		
+		return "redirect:/offer/listothers";	
 	}
 
 }

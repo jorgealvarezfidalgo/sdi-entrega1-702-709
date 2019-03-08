@@ -12,7 +12,11 @@ import com.uniovi.entities.User;
 
 public interface OffersRepository extends CrudRepository<Offer, Long> {
 
-	Page<Offer> findAllByUser(Pageable pageable, User user);
+	Page<Offer> findAllBySeller(Pageable pageable, User seller);
 
 	Page<Offer> findAll(Pageable pageable);
+
+	@Query("SELECT o FROM Offer o WHERE o.seller != ?1")
+	Page<Offer> findOthersByUser(Pageable pageable, User buyer);
+
 }

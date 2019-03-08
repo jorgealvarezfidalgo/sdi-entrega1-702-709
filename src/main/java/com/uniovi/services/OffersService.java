@@ -1,11 +1,14 @@
 package com.uniovi.services;
 
 import java.util.LinkedList;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
 import com.uniovi.entities.Offer;
@@ -32,12 +35,25 @@ public class OffersService {
 	}
 
 
-	public Page<Offer> getOffersForUser(Pageable pageable, User user) {
+	public Page<Offer> getOffersForUser(Pageable pageable, User seller) {
 		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
-		if (user.getRole().equals("ROLE_USER")) {
-			offers = offersRepository.findAllByUser(pageable, user);
+		if (seller.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.findAllBySeller(pageable, seller);
 		}
 		return offers;
+	}
+	
+	public Page<Offer> getOtherUsersOffers(Pageable pageable, User buyer) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		if (buyer.getRole().equals("ROLE_USER")) {
+			offers = offersRepository.findOthersByUser(pageable, buyer);
+		}
+		return offers;
+	}
+
+	public Offer findById(Long id) {
+		Offer offer = offersRepository.findById(id).get();
+		return offer;
 	}
 
 

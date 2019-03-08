@@ -3,6 +3,7 @@ package com.uniovi.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
@@ -27,9 +28,11 @@ public class Offer {
 	private Date date;
 	private Double cost;
 
-	@ManyToOne
-	@JoinColumn(name = "user_id")
-	private User user;
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User seller;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+	private User buyer;
 
 	public Offer(Long id, String title, String description, Date fecha, Double cost) {
 		this.title = title;
@@ -40,9 +43,10 @@ public class Offer {
 			this.date = new Date(System.currentTimeMillis());
 		this.cost = cost;
 		this.id = id;
+		this.buyer = null;
 	}
 
-	public Offer(String title, String description, Date fecha, Double cost, User user) {
+	public Offer(String title, String description, Date fecha, Double cost, User seller) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -51,7 +55,7 @@ public class Offer {
 		else
 			this.date = new Date(System.currentTimeMillis());
 		this.cost = cost;
-		this.user = user;
+		this.seller = seller;
 	}
 
 	public Offer() {
@@ -94,16 +98,24 @@ public class Offer {
 		this.cost = cost;
 	}
 
-	public User getUser() {
-		return user;
+	public User getSeller() {
+		return seller;
 	}
 
-	public void setUser(User user) {
-		this.user = user;
+	public void setSeller(User seller) {
+		this.seller = seller;
 	}
 
 	public Long getId() {
 		return id;
+	}
+
+	public User getBuyer() {
+		return buyer;
+	}
+
+	public void setBuyer(User buyer) {
+		this.buyer = buyer;
 	}
 
 }

@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2 th:text="#{othersoffers.message}"></h2>
+		<div class="table-responsive">
+			<table class="table table-hover" th:fragment="tableOffers"
+				id="tableOffers">
+				<thead>
+					<tr>
+						<th th:text="#{title.message}"></th>
+						<th th:text="#{description.message}"></th>
+						<th th:text="#{cost.message}"></th>
+						<th th:text="#{date.message}"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="offer : ${offerList}">
+						<td th:text="${offer.title}">A</td>
+						<td th:text="${offer.description}">B</td>
+						<td th:text="${offer.cost}">10</td>
+						<td th:text="${offer.date}">10-05-1453</td>
+						<td>
+							<div>
+								<div th:if="${offer.buyer == null}">
+									<button type="button" th:id="${'buyButton' + offer.id}"
+										class="btn btn-info">Comprar</button>
+									<script th:inline="javascript">
+									/*<![CDATA[*/
+									$( "#buyButton[[${offer.id}]]" ).click(function() {
+										$.get( "/offer/[[${offer.id}]]/buy", function( data ) {
+											var numberPage = [[${param.page}]];
+											var urlUpdate = '/offer/listothers/update';
+											if ( numberPage != null ){
+												urlUpdate += "?page="+numberPage[0];
+											}
+											$("#tableOffers").load(urlUpdate);
+										});
+									});
+									/*]]>*/
+									</script>
+								</div>
+								<div th:unless="${offer.buyer == null}">
+									<th:text>Vendido</th:text>
+								</div>
+							</div>
+						</td>
+
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+	</div>
+
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

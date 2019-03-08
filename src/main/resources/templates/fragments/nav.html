@@ -9,18 +9,20 @@
 			</button>
 			<img src="/img/user.png" alt="logo" />
 		</div>
-		
-		
+
+
 		<div class="collapse navbar-collapse" id="myNavbar">
-		<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
-		<li id="offers-menu" class="dropdown" sec:authorize="hasRole('ROLE_USER')"><a class="dropdown-toggle" id="offerdropdown"
-					data-toggle="dropdown" href="#" th:text="#{offersmanager.message}"><span
-						class="caret"></span> </a>
+			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+				<li id="offers-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_USER')"><a
+					class="dropdown-toggle" id="offerdropdown" data-toggle="dropdown"
+					href="#" th:text="#{offersmanager.message}"><span class="caret"></span>
+				</a>
 					<ul class="dropdown-menu">
-						<li sec:authorize="hasRole('ROLE_USER')"><a 
-							href="/offer/add" id="addoffer" th:text="#{addoffer.message}"></a></li>
-						<li sec:authorize="hasRole('ROLE_USER')"><a href="/offer/listown" 
-						th:text="#{seeownoffer.message}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a href="/offer/add"
+							id="addoffer" th:text="#{addoffer.message}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a
+							href="/offer/listown" th:text="#{seeownoffer.message}"></a></li>
 					</ul></li>
 				<li id="users-menu" class="dropdown"
 					sec:authorize="hasRole('ROLE_ADMIN')"><a id="userdropdown"
@@ -30,12 +32,26 @@
 						<li><a href="/user/list" th:text="#{seeusers.message}"></a></li>
 					</ul></li>
 			</ul>
+			<ul class="nav navbar-nav" sec:authorize="isAuthenticated()">
+				<li id="purchases-menu" class="dropdown"
+					sec:authorize="hasRole('ROLE_USER')"><a
+					class="dropdown-toggle" id="purchasedropdown"
+					data-toggle="dropdown" href="#" th:text="#{purchasesmenu.message}"><span
+						class="caret"></span> </a>
+					<ul class="dropdown-menu">
+						<li sec:authorize="hasRole('ROLE_USER')"><a href="/offer/listothers"
+							id="purchasesearch" th:text="#{purchasesearch.message}"></a></li>
+						<li sec:authorize="hasRole('ROLE_USER')"><a
+							href="/offer/listown" th:text="#{purchasedoffers.message}"></a></li>
+					</ul></li>
+			</ul>
 			<ul class="nav navbar-nav navbar-right">
-			
-			<li sec:authorize="isAuthenticated()"><span class="glyphicon glyphicon-email"
-				sec:authentication="principal.username" th:inline="text"></span></li>
-				<li sec:authorize="isAuthenticated()"><span 
-								th:text="${session.saldo}"></span></li>
+
+				<li sec:authorize="isAuthenticated()"><span
+					class="glyphicon glyphicon-email"
+					sec:authentication="principal.username" th:inline="text"></span></li>
+				<li sec:authorize="isAuthenticated()"><span
+					th:text="${session.saldo}"></span></li>
 				<li class="dropdown"><a id="btnLanguage"
 					href="                 #" class="dropdown-toggle"
 					data-toggle="dropdown" role="button" aria-haspopup="true"
@@ -59,15 +75,16 @@
 								th:text="#{language.ru}"></span>
 						</a></li>
 					</ul></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/signup" id="signup"
-					th:text="#{signup.message}"> <span
+				<li sec:authorize="!isAuthenticated()"><a href="/signup"
+					id="signup" th:text="#{signup.message}"> <span
 						class="glyphicon glyphicon-user"></span>
 				</a></li>
-				<li sec:authorize="!isAuthenticated()"><a href="/login" id="login"
-					th:text="#{login.message}"> <span
+				<li sec:authorize="!isAuthenticated()"><a href="/login"
+					id="login" th:text="#{login.message}"> <span
 						class="glyphicon glyphicon-log-in"></span>
 				</a></li>
-				<li sec:authorize="isAuthenticated()"><a href="/logout" id="logout" th:text="#{logout.message}"> <span
+				<li sec:authorize="isAuthenticated()"><a href="/logout"
+					id="logout" th:text="#{logout.message}"> <span
 						class="glyphicon glyphicon-log-out"></span>
 				</a></li>
 			</ul>

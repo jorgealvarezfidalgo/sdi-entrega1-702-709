@@ -5,6 +5,7 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
@@ -27,8 +28,11 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	@OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 	private Set<Offer> offers;
+	
+	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+	private Set<Offer> purchases;
 
 	public User(String email, String name, String lastName) {
 		super();
@@ -115,6 +119,14 @@ public class User {
 
 	public void setOffers(Set<Offer> offers) {
 		this.offers = offers;
+	}
+	
+	public Set<Offer> getPurchases() {
+		return purchases;
+	}
+
+	public void setPurchases(Set<Offer> purchases) {
+		this.offers = purchases;
 	}
 
 }
