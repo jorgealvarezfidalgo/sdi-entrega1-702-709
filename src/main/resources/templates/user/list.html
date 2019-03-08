@@ -3,7 +3,7 @@
 <head th:replace="fragments/head" />
 <body>
 
-	<!-- Barra de Navegación superior -->
+	 Barra de Navegación superior -->
 	<nav th:replace="fragments/nav" />
 
 	<div class="container">
@@ -12,13 +12,11 @@
 		<button type="button" id="deleteButton" class="btn btn-default"
 			th:text="#{delete.message}"></button>
 		<script th:inline="javascript">
-		 /*<![CDATA[*/  $( "#deleteButton" ).click(function() {   
+		 <![CDATA[  $( "#deleteButton" ).click(function() {   
 			 
 			 [[${usersList}]].forEach(function borrarSiChequeado(user) {
 				 if($('#deleteChk'+user.id).prop('checked')) {
-					 $.get(
-								"/user/delete/" + user.id
-								);
+					 $.get("/user/delete/" + user.id);
 				 }
 					 
 			 }); 
@@ -30,7 +28,7 @@
 			$("#tableUsers").load(urlUpdate);
 
 			 });    
-		 /*]]>*/
+		 ]]>
 		 </script>
 		<div class="table-responsive">
 			<table class="table table-hover"  th:fragment="tableUsers"
@@ -44,17 +42,17 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr th:each="user : ${usersList}">
-						<td th:text="#{user.email}">nombre@email.com</td>
-						<td th:text="#{user.name}">Nombre del usuario</td>
-						<td th:text="#{user.lastName}">Apellidos del usuario</td>
-						<td><div>
-								<form>
-									<input type="checkbox" name="delete" value="delete" th:id="${'deleteChk' + user.id}"><label
-										th:for="${'deleteChk' + user.id}" th:text="#{delete.message}"></label>
-								</form>
-							</div></td>
-					</tr>
+ 					<tr th:each="user : ${usersList}"> 
+ 						<td th:text="#{user.email}">nombre@email.com</td>
+ 						<td th:text="#{user.name}">Nombre del usuario</td> 
+ 						<td th:text="#{user.lastName}">Apellidos del usuario</td> 
+ 						<td><div> 
+ 								<form> 
+ 									<input type="checkbox" name="delete" value="delete" th:id="${'deleteChk' + user.id}"><label
+ 										th:for="${'deleteChk' + user.id}" th:text="#{delete.message}"></label>
+ 								</form> 
+ 							</div></td> 
+ 					</tr> 
 				</tbody>
 			</table>
 		</div>
