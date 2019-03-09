@@ -31,5 +31,9 @@ public class OfferFormValidator implements Validator {
 		if (offer.getDescription().length() < 2 || offer.getDescription().length() > 50) {
 			errors.rejectValue("description", "Error.offer.description");
 		}
+		
+		if (offer.getSeller().getSaldo() < 20) {
+			errors.rejectValue("destacada", "Error.saldo");
+		}
 	}
 }

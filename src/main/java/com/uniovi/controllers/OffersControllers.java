@@ -6,6 +6,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.LinkedList;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
@@ -53,8 +55,11 @@ public class OffersControllers {
 	}
 
 	@RequestMapping(value = "/offer/add", method = RequestMethod.POST)
-	public String setOffer(@Validated @ModelAttribute Offer offer, BindingResult result, Model model,
+	public String setOffer(@Validated @ModelAttribute Offer offer, HttpSession session, BindingResult result, Model model,
 			Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		offer.setSeller(user);
 		offerFormValidator.validate(offer, result);
 		if (result.hasErrors()) {
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -63,10 +68,12 @@ public class OffersControllers {
 			model.addAttribute("currentDate", todayAsString);
 			model.addAttribute("usersList", usersService.getUsers());
 			return "offer/add";
+		}	
+		if(offer.isDestacada()) {
+			user.setSaldo(user.getSaldo() - 20);
+			usersService.updateUser(user);
+			session.setAttribute("saldo", user.getSaldo());
 		}
-		String email = principal.getName();
-		User user = usersService.getUserByEmail(email);
-		offer.setSeller(user);
 		offersService.addOffer(offer);
 		return "redirect:/offer/listown";
 	}
@@ -162,6 +169,37 @@ public class OffersControllers {
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/purchaseslist :: tablePurchases";
+	}
+	
+	@RequestMapping(value = "/offer/{id}/highlight", method = RequestMethod.GET)
+	public String setHighlight(HttpSession session,Model model, @PathVariable Long id, Principal principal) {
+		offersService.setOfferHighlight(true, id);
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		user.setSaldo(user.getSaldo() - 20);
+		session.setAttribute("saldo", user.getSaldo());
+		usersService.updateUser(user);
+		return "redirect:/offer/listown";
+	}
+
+	@RequestMapping(value = "/offer/{id}/nohighlight", method = RequestMethod.GET)
+	public String setNoHighlight(Model model, @PathVariable Long id) {
+		offersService.setOfferHighlight(false, id);
+		return "redirect:/offer/listown";
+	}
+	
+	@RequestMapping("/offer/listown/update")
+	public String updateListOwn(Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
+		model.addAttribute("offerList", offers.getContent());
+		return "offer/listown :: tableOffers";
+	}
+	
+	@RequestMapping("/offer/reload/saldo")
+	public String updateSaldo(Model model, Pageable pageable, Principal principal) {
+		return "offer/listown :: nav";
 	}
 
 }

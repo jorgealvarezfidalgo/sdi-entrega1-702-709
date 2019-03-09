@@ -11,6 +11,11 @@ import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 
 public interface OffersRepository extends CrudRepository<Offer, Long> {
+	
+	@Modifying
+	@Transactional
+	@Query("UPDATE Offer SET destacada = ?1 WHERE id = ?2")
+	void updateHighlight(Boolean highlight, Long id);
 
 	Page<Offer> findAllBySeller(Pageable pageable, User seller);
 
@@ -24,5 +29,8 @@ public interface OffersRepository extends CrudRepository<Offer, Long> {
 
 	@Query("SELECT o FROM Offer o WHERE o.buyer = ?1")
 	Page<Offer> findBoughtByUser(Pageable pageable, User buyer);
+	
+	@Query("SELECT o FROM Offer o WHERE o.destacada = true AND o.seller != ?1")
+	Page<Offer> findAllHighlighted(Pageable pageable, User buyer);
 
 }

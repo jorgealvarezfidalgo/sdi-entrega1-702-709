@@ -1,7 +1,6 @@
 package com.uniovi.services;
 
 import java.util.LinkedList;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -70,6 +69,22 @@ public class OffersService {
 			offers = offersRepository.findBoughtByUser(pageable, buyer);
 		}
 		return offers;
+	}
+	
+	public Page<Offer> getHighlightedOffers(Pageable pageable, User buyer) {
+		Page<Offer> offers = new PageImpl<Offer>(new LinkedList<Offer>());
+		offers = offersRepository.findAllHighlighted(pageable, buyer);
+
+		return offers;
+	}
+	
+	public void setOfferHighlight(boolean highlight, Long id) {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		Offer offer = offersRepository.findById(id).get();
+		if (offer.getSeller().getEmail().equals(email)) {
+			offersRepository.updateHighlight(highlight, id);
+		}
 	}
 
 }

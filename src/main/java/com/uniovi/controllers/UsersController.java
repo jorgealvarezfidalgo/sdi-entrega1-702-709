@@ -1,7 +1,6 @@
 package com.uniovi.controllers;
 
 import java.security.Principal;
-import java.util.LinkedList;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -9,7 +8,6 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -21,9 +19,9 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.User;
+import com.uniovi.services.OffersService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.SecurityService;
 import com.uniovi.services.UsersService;
@@ -37,6 +35,9 @@ public class UsersController {
 
 	@Autowired
 	private UsersService usersService;
+	
+	@Autowired
+	private OffersService offersService;
 	
 	@Autowired
 	private SignUpFormValidator signUpFormValidator;
@@ -92,11 +93,11 @@ public class UsersController {
 	}
 
 	@RequestMapping(value = { "/home" }, method = RequestMethod.GET)
-	public String home(HttpSession session, Model model) {
+	public String home(HttpSession session, Model model, Pageable pageable) {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		//model.addAttribute("markList", activeUser.getOffers());
+		model.addAttribute("offerList", offersService.getHighlightedOffers(pageable, activeUser));
 		session.setAttribute("saldo", activeUser.getSaldo());
 		return "home";
 	}

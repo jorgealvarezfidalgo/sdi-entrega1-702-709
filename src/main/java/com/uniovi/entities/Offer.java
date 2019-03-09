@@ -3,16 +3,13 @@ package com.uniovi.entities;
 import java.util.Date;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
-
 
 @Entity
 public class Offer {
@@ -22,35 +19,37 @@ public class Offer {
 	private Long id;
 	private String title;
 	private String description;
-	
+
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
-	@Temporal(TemporalType.DATE) 
+	@Temporal(TemporalType.DATE)
 	private Date date;
 	private Double cost;
+	private boolean destacada;
 
 	@ManyToOne
 	private User seller;
-	
+
 	@ManyToOne
 	private User buyer;
 
-	public Offer(Long id, String title, String description, Date fecha, Double cost) {
+	public Offer(Long id, String title, String description, Date fecha, Double cost, boolean destacada) {
 		this.title = title;
 		this.description = description;
-		if(fecha!=null)
+		if (fecha != null)
 			this.date = fecha;
 		else
 			this.date = new Date(System.currentTimeMillis());
 		this.cost = cost;
 		this.id = id;
 		this.buyer = null;
+		this.destacada = destacada;
 	}
 
 	public Offer(String title, String description, Date fecha, Double cost, User seller) {
 		super();
 		this.title = title;
 		this.description = description;
-		if(fecha!=null)
+		if (fecha != null)
 			this.date = fecha;
 		else
 			this.date = new Date(System.currentTimeMillis());
@@ -116,6 +115,14 @@ public class Offer {
 
 	public void setBuyer(User buyer) {
 		this.buyer = buyer;
+	}
+
+	public boolean isDestacada() {
+		return destacada;
+	}
+
+	public void setDestacada(boolean destacada) {
+		this.destacada = destacada;
 	}
 
 }
