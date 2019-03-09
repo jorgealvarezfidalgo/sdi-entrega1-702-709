@@ -28,10 +28,10 @@ public class Offer {
 	private Date date;
 	private Double cost;
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private User seller;
 	
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne
 	private User buyer;
 
 	public Offer(Long id, String title, String description, Date fecha, Double cost) {

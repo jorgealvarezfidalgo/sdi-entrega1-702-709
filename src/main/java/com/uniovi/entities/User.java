@@ -1,5 +1,6 @@
 package com.uniovi.entities;
 
+import java.util.HashSet;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -28,11 +29,11 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Offer> offers;
+	@OneToMany(mappedBy = "seller")
+	private Set<Offer> offers = new HashSet<Offer>();
 	
-	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-	private Set<Offer> purchases;
+	@OneToMany(mappedBy = "buyer")
+	private Set<Offer> purchases = new HashSet<Offer>();
 
 	public User(String email, String name, String lastName) {
 		super();
