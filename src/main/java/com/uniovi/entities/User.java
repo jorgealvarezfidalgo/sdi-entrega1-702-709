@@ -3,12 +3,15 @@ package com.uniovi.entities;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class User {
@@ -27,10 +30,12 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	@OneToMany(mappedBy = "seller")
+	@JsonIgnoreProperties("seller")
+	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
 	private Set<Offer> offers = new HashSet<Offer>();
-	
-	@OneToMany(mappedBy = "buyer")
+
+	@JsonIgnoreProperties("buyer")
+	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
 	private Set<Offer> purchases = new HashSet<Offer>();
 
 	public User(String email, String name, String lastName) {
@@ -119,7 +124,7 @@ public class User {
 	public void setOffers(Set<Offer> offers) {
 		this.offers = offers;
 	}
-	
+
 	public Set<Offer> getPurchases() {
 		return purchases;
 	}

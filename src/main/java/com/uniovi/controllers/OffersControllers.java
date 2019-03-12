@@ -138,7 +138,7 @@ public class OffersControllers {
 	}
 
 	@RequestMapping(value = "/offer/{id}/buy", method = RequestMethod.GET)
-	public String buyOffer(Model model, Principal principal, @PathVariable Long id) {
+	public String buyOffer(Model model, Principal principal, @PathVariable Long id, HttpSession session) {
 		String email = principal.getName();
 		User buyer = usersService.getUserByEmail(email);
 		Offer offer = offersService.findById(id);
@@ -147,7 +147,10 @@ public class OffersControllers {
 			offer.setBuyer(buyer);
 			offersService.addOffer(offer);
 			usersService.updateUser(buyer);
-		}
+			session.setAttribute("saldo", buyer.getSaldo());
+		} else
+			model.addAttribute("errorsaldo", "saldo insuficiente");
+		
 		System.out.println(offer.getBuyer().getEmail());
 		return "redirect:/offer/listothers";
 	}
