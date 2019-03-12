@@ -12,6 +12,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
+import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
@@ -164,7 +165,85 @@ public class SdiEntrega1702709Tests {
 	
 	@Test
 	public void PR11() {
+		//El usuario no está autenticado
 		SeleniumUtils.textoNoPresentePagina(driver, "Cerrar sesión");
+	}
+	
+	@Test
+	public void PR12() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+		
+		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+		
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'uo216936@uniovi.es')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'cruzadaeterna@gmail.com')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'armaggedon41@hotmail.com')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'helsreach@yahoo.es')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'alpha-legion@gmail.com')]");
+	}
+	
+	@Test
+	public void PR13() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+		
+		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+		
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'uo216936@uniovi.es')]");
+		
+		PO_HomeView.clickOptionById(driver, "deleteChk1", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "uo216936@uniovi.es",PO_View.getTimeout() );
+
+	}
+	
+	@Test
+	public void PR14() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+		
+		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+		
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'alpha-legion@gmail.com')]");
+		
+		PO_HomeView.clickOptionById(driver, "deleteChk5", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "alpha-legion@gmail.com",PO_View.getTimeout() );
+
+	}
+	
+	@Test
+	public void PR15() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+		
+		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+		
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'cruzadaeterna@gmail.com')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'armaggedon41@hotmail.com')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'helsreach@yahoo.es')]");
+		
+		PO_HomeView.clickOptionById(driver, "deleteChk2", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteChk3", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteChk4", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "cruzadaeterna@gmail.com",PO_View.getTimeout() );
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "armaggedon41@hotmail.com",PO_View.getTimeout() );
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "helsreach@yahoo.es",PO_View.getTimeout() );
+
 	}
 
 	

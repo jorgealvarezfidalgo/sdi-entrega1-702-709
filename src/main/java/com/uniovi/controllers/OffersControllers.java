@@ -176,12 +176,15 @@ public class OffersControllers {
 	
 	@RequestMapping(value = "/offer/{id}/highlight", method = RequestMethod.GET)
 	public String setHighlight(HttpSession session,Model model, @PathVariable Long id, Principal principal) {
-		offersService.setOfferHighlight(true, id);
+		
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
-		user.setSaldo(user.getSaldo() - 20);
-		session.setAttribute("saldo", user.getSaldo());
-		usersService.updateUser(user);
+		if(user.getSaldo() >= 20) {
+			user.setSaldo(user.getSaldo() - 20);
+			session.setAttribute("saldo", user.getSaldo());
+			usersService.updateUser(user);
+			offersService.setOfferHighlight(true, id);
+		}
 		return "redirect:/offer/listown";
 	}
 
