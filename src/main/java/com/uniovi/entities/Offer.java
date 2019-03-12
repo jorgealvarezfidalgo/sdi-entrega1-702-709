@@ -1,15 +1,22 @@
 package com.uniovi.entities;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
+
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Offer {
@@ -25,12 +32,16 @@ public class Offer {
 	private Date date;
 	private Double cost;
 	private boolean destacada;
-
+	
 	@ManyToOne
 	private User seller;
-
+	
 	@ManyToOne
 	private User buyer;
+	
+	@JsonIgnoreProperties("offer")
+	@OneToMany(mappedBy = "offer", cascade = CascadeType.ALL)
+	private Set<Chat> chats = new HashSet<>();
 
 	public Offer(Long id, String title, String description, Date fecha, Double cost, boolean destacada) {
 		this.title = title;
