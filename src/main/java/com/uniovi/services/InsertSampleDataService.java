@@ -63,6 +63,87 @@ public class InsertSampleDataService {
 			e.printStackTrace();
 		}
 		user1.setOffers(user1Offers);
+		
+		Set<Offer> user2Offers = null;
+		try {
+			user2Offers = new HashSet<Offer>() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				{
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					add(new Offer("Guitarra española", "Marca Alhambra", df.parse("2018-03-10"),165.99, user2));
+					add(new Offer("La Divina Comedia", "Clásico indiscutible de Dante Alighieri", df.parse("2019-03-04"),25.6, user2));
+					add(new Offer("TES III: Morrowind", "Edición GOTY", null ,15.5, user2));
+				}
+			};
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		user2.setOffers(user2Offers);
+		
+		Set<Offer> user3Offers = null;
+		try {
+			user3Offers = new HashSet<Offer>() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				{
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					add(new Offer("Cadillac CTS-V", "2005, 250 CV", null, 4500.0, user3));
+					add(new Offer("Paraguas negro", "Ligeramente oxidado", df.parse("2019-03-01"),4.3, user3));
+					add(new Offer("Motosierra", "Engrasada y lista para la acción.", null ,134.0, user3));
+				}
+			};
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		user3.setOffers(user3Offers);
+		
+		Set<Offer> user4Offers = null;
+		try {
+			user1Offers = new HashSet<Offer>() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				{
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					add(new Offer("Relicario", "Manifestación material de la voluntad divina", df.parse("2018-01-151"),438.0, user4));
+					add(new Offer("Gaita asturiana", "Fabricación artesanal por Varillas", df.parse("2019-03-03"),1537.3, user4));
+					add(new Offer("Nokia 3000", "Absolutamente indestructible", null ,3000.0, user4));
+				}
+			};
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		user4.setOffers(user4Offers);
+		
+		Set<Offer> user5Offers = null;
+		try {
+			user5Offers = new HashSet<Offer>() {
+				/**
+				 * 
+				 */
+				private static final long serialVersionUID = 1L;
+
+				{
+					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+					add(new Offer("Yelmo templario", "Siglo XII. Perteneciente a la Orden de los Pobres Compañeros de Cristo"
+							+ " y del Templo de Salomón. ", df.parse("2018-01-04"),120.0, user5));
+					add(new Offer("Cheytac Intervención", "Fusil de largo alcance.", df.parse("2019-08-17"),1876.5, user5));
+					add(new Offer("Libro de salmos ucraniano.", "Encontrado en Pripyat. Ligeramente irradiado.", null ,15.0, user5));
+				}
+			};
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		user5.setOffers(user5Offers);
 
 		usersService.addUser(user1);
 		usersService.addUser(user2);
