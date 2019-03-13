@@ -32,11 +32,19 @@ public class User {
 
 	@JsonIgnoreProperties("seller")
 	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
-	private Set<Offer> offers = new HashSet<Offer>();
+	private Set<Offer> offers = new HashSet<>();
 
 	@JsonIgnoreProperties("buyer")
 	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
-	private Set<Offer> purchases = new HashSet<Offer>();
+	private Set<Offer> purchases = new HashSet<>();
+
+	@JsonIgnoreProperties("creator")
+	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
+	private Set<Chat> createdChats  = new HashSet<>();
+
+	@JsonIgnoreProperties("sender")
+	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
+	private Set<Message> sendedmessages = new HashSet<>();
 
 	public User(String email, String name, String lastName) {
 		super();
