@@ -19,7 +19,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
@@ -85,7 +84,7 @@ public class UsersController {
 		}
 
 		user.setRole(rolesService.getRoles()[0]);
-
+		user.setSaldo(100);
 		usersService.addUser(user);
 		securityService.autoLogin(user.getEmail(), user.getPasswordConfirm());
 		

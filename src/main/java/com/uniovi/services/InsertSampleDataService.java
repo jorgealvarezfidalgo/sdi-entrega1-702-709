@@ -106,7 +106,7 @@ public class InsertSampleDataService {
 		
 		Set<Offer> user4Offers = null;
 		try {
-			user1Offers = new HashSet<Offer>() {
+			user4Offers = new HashSet<Offer>() {
 				/**
 				 * 
 				 */
