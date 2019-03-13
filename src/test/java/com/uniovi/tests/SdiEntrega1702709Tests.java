@@ -12,7 +12,6 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
-import com.uniovi.tests.pageobjects.PO_PrivateView;
 import com.uniovi.tests.pageobjects.PO_Properties;
 import com.uniovi.tests.pageobjects.PO_RegisterView;
 import com.uniovi.tests.pageobjects.PO_View;
@@ -200,7 +199,8 @@ public class SdiEntrega1702709Tests {
 		
 		PO_HomeView.clickOptionById(driver, "deleteChk1", "id", "tableUsers");
 		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "uo216936@uniovi.es",PO_View.getTimeout() );
+		SeleniumUtils.esperarSegundos(driver, 2);   
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "uo216936@uniovi.es", PO_View.getTimeout());
 
 	}
 	
@@ -216,9 +216,10 @@ public class SdiEntrega1702709Tests {
 		
 		PO_View.checkElement(driver, "free", "//td[contains(text(), 'alpha-legion@gmail.com')]");
 		
-		PO_HomeView.clickOptionById(driver, "deleteChk5", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteChk9", "id", "tableUsers");
 		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "alpha-legion@gmail.com",PO_View.getTimeout() );
+		SeleniumUtils.esperarSegundos(driver, 2);    
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "alpha-legion@gmail.com", PO_View.getTimeout());
 
 	}
 	
@@ -236,13 +237,15 @@ public class SdiEntrega1702709Tests {
 		PO_View.checkElement(driver, "free", "//td[contains(text(), 'armaggedon41@hotmail.com')]");
 		PO_View.checkElement(driver, "free", "//td[contains(text(), 'helsreach@yahoo.es')]");
 		
-		PO_HomeView.clickOptionById(driver, "deleteChk2", "id", "tableUsers");
-		PO_HomeView.clickOptionById(driver, "deleteChk3", "id", "tableUsers");
-		PO_HomeView.clickOptionById(driver, "deleteChk4", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteChk5", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteChk6", "id", "tableUsers");
+		PO_HomeView.clickOptionById(driver, "deleteChk7", "id", "tableUsers");
 		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "cruzadaeterna@gmail.com",PO_View.getTimeout() );
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "armaggedon41@hotmail.com",PO_View.getTimeout() );
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "helsreach@yahoo.es",PO_View.getTimeout() );
+		SeleniumUtils.esperarSegundos(driver, 1);    
+
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "cruzadaeterna@gmail.com", PO_View.getTimeout());
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "armaggedon41@hotmail.com", PO_View.getTimeout());
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "helsreach@yahoo.es", PO_View.getTimeout());
 
 	}
 

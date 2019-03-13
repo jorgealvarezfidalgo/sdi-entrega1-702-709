@@ -12,23 +12,23 @@
 		<button type="button" id="deleteButton" class="btn btn-default"
 			th:text="#{delete.message}"></button>
 		<script th:inline="javascript">
-		 <![CDATA[  $( "#deleteButton" ).click(function() {   
+		/*<![CDATA[*/ $( "#deleteButton" ).click(function() {   
 			 
 			 [[${usersList}]].forEach(function borrarSiChequeado(user) {
 				 if($('#deleteChk'+user.id).prop('checked')) {
-					 $.get("/user/delete/" + user.id);
+					 $("#tableUsers").load("/user/delete/" + user.id);
 				 }
 					 
 			 }); 
-			var numberPage = [[${param.page}]];   
-			var urlUpdate = '/user/list/update';                   
-			if ( numberPage != null ){                      
-				urlUpdate += "?page="+numberPage[0];                  
-				}                   
-			$("#tableUsers").load(urlUpdate);
+			//var numberPage = [[${param.page}]];   
+			//var urlUpdate = '/user/list/update';                   
+			//if ( numberPage != null ){                      
+			//	urlUpdate += "?page="+numberPage[0];                  
+			//	}             
+			//$("#tableUsers").load(urlUpdate);
 
 			 });    
-		 ]]>
+		/*]]>*/
 		 </script>
 		<div class="table-responsive">
 			<table class="table table-hover" th:fragment="tableUsers"

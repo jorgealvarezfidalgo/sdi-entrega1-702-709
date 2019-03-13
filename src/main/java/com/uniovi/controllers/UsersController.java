@@ -19,6 +19,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
@@ -57,13 +58,17 @@ public class UsersController {
 	public String updateList(Model model, Pageable pageable, Principal principal) {
 		Page<User> users = usersService.getUsers(pageable);
 		model.addAttribute("usersList", users.getContent());
+		model.addAttribute("page", users);
+		System.out.println("Wo");
 		return "user/list :: tableUsers";
 	}
 	
 	@RequestMapping("/user/delete/{id}")
-	public String delete(@PathVariable Long id) {
+	public String delete(@PathVariable Long id, Pageable pageable, Model model) {
 		usersService.deleteUser(id);
-		return "redirect:/user/list";
+		Page<User> users = usersService.getUsers(pageable);
+		model.addAttribute("usersList", users.getContent());
+		return "user/list :: tableUsers";
 	}
 
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
