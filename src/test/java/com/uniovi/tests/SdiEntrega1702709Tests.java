@@ -284,7 +284,6 @@ public class SdiEntrega1702709Tests {
 		PO_HomeView.clickOptionById(driver, "offerdropdown", "id", "addoffer");
 	}
 
-	// PRN. Loguearse con exito desde el ROl de Admin
 	@Test
 	public void PR07() {
 		// Vamos al formulario de logueo.
@@ -629,6 +628,31 @@ public class SdiEntrega1702709Tests {
 		PO_View.checkKey(driver, "name.message", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "surname.message", PO_Properties.getSPANISH());
 		
+	}
+	
+	@Test
+	public void PR28() {
+		driver.navigate().to("http://localhost:8080/user/list");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.checkElement(driver, "id", "loginbtn");
+	}
+	
+	@Test
+	public void PR29() {
+		driver.navigate().to("http://localhost:8080/offer/listown");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.checkElement(driver, "id", "loginbtn");
+	}
+	
+	@Test
+	public void PR30() {
+		
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		
+		driver.navigate().to("http://localhost:8080/user/list");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.checkKey(driver, "forbidden.message", PO_Properties.getSPANISH());
 	}
 
 }

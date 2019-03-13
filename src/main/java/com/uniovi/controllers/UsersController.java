@@ -114,4 +114,9 @@ public class UsersController {
 	    }
 	    return "redirect:login";
 	}
+	
+	@RequestMapping(value="/403", method = RequestMethod.GET)
+	public String denyAccess() {
+		return "accessdenied";
+	}
 }
