@@ -528,9 +528,107 @@ public class SdiEntrega1702709Tests {
 	
 	@Test
 	public void PR27() {
-		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
-				PO_Properties.getENGLISH());
-		// SeleniumUtils.esperarSegundos(driver, 2);
+		//Página principal
+		PO_View.getP();
+		PO_View.checkKey(driver, "language.change", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "login.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "welcome.message", PO_Properties.getSPANISH());
+		
+		PO_HomeView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		
+		PO_View.getP();
+		PO_View.checkKey(driver, "language.change", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "signup.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "login.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "welcome.message", PO_Properties.getENGLISH());
+		
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");   
+		//Rellenamos el formulario    
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com" , "123456" );  
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+		
+		PO_View.checkKey(driver, "logout.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "offersmanager.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "purchasesmenu.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getENGLISH());
+		
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_View.checkKey(driver, "addoffer.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "seeownoffer.message", PO_Properties.getENGLISH());
+		
+		
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
+		PO_View.checkKey(driver, "purchasesearch.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "purchasedoffers.message", PO_Properties.getENGLISH());
+		
+		PO_HomeView.changeIdiom(driver, "btnSpanish");
+		
+		PO_View.checkKey(driver, "logout.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "offersmanager.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "purchasesmenu.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getSPANISH());
+		
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_View.checkKey(driver, "addoffer.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "seeownoffer.message", PO_Properties.getSPANISH());
+		
+		
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
+		PO_View.checkKey(driver, "purchasesearch.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "purchasedoffers.message", PO_Properties.getSPANISH());
+		
+		//Agregar oferta
+		
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/add')]", 0);
+		
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		PO_View.checkKey(driver, "title.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "description.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "cost.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "date.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "destacada.message", PO_Properties.getSPANISH());
+		
+		PO_HomeView.changeIdiom(driver, "btnEnglish");
+		
+		PO_View.checkKey(driver, "title.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "description.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "cost.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "date.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "destacada.message", PO_Properties.getENGLISH());
+		
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary"); 
+		
+		//Listado de usuarios
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");   
+		//Rellenamos el formulario    
+		PO_LoginView.fillForm(driver, "admin@email.com" , "admin" );  
+		PO_View.checkElement(driver, "text", "admin@email.com");
+		
+		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+
+		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+		SeleniumUtils.esperarSegundos(driver, 2);
+		
+		PO_HomeView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		
+		PO_View.checkKey(driver, "currentusers.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "email.word", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "surname.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "users.message", PO_Properties.getENGLISH());
+		
+		PO_HomeView.changeIdiom(driver, "btnSpanish");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		
+		PO_View.checkKey(driver, "currentusers.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "email.word", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "name.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "surname.message", PO_Properties.getSPANISH());
+		
 	}
 
 }
