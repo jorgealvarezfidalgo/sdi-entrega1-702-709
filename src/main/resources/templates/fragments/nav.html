@@ -50,7 +50,7 @@
 				<li sec:authorize="isAuthenticated()"><span
 					class="glyphicon glyphicon-email"
 					sec:authentication="principal.username" th:inline="text"></span></li>
-				<li sec:authorize="isAuthenticated()"><span
+				<li sec:authorize="hasRole('ROLE_USER')"><span
 					th:text="${session.saldo}" class="glyphicon glyphicon-saldo"></span></li>
 				<li class="dropdown"><a id="btnLanguage"
 					href="                 #" class="dropdown-toggle"

@@ -11,7 +11,7 @@ import com.uniovi.tests.util.SeleniumUtils;
 public class PO_PrivateView extends PO_NavView {
 	
 	static public void fillFormAddOffer(WebDriver driver, String titlep,  String descriptionp,
-			String costp, String datep)   {             
+			String costp, String datep, boolean destacadap)   {             
 		//Esperamos 5 segundo a que carge el DOM porque en algunos equipos falla            
 		SeleniumUtils.esperarSegundos(driver, 5);                
 		//Rellenemos el campo de descripción      
@@ -26,7 +26,10 @@ public class PO_PrivateView extends PO_NavView {
 		cost.sendKeys(costp);   
 		WebElement date = driver.findElement(By.name("date"));    
 		date.clear();    
-		date.sendKeys(datep);   
+		date.sendKeys(datep); 
+		WebElement destacada = driver.findElement(By.name("destacada")); 
+		if(destacadap)
+			destacada.click();
 		By boton = By.className("btn");    
 		driver.findElement(boton).click();    
 	}

@@ -56,7 +56,7 @@ public class SdiEntrega1702709Tests {
 
 	// //Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
-	static String URL = "http://localhost:8090";
+	static String URL = "http://localhost:8080";
 
 	public static WebDriver getDriver(String PathFirefox, String Geckdriver) {
 		System.setProperty("webdriver.firefox.bin", PathFirefox);
@@ -450,7 +450,7 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/add')]", 0);
 
 		PO_PrivateView.fillFormAddOffer(driver, "Nanomáquinas", "Se activan en respuesta al trauma físico", "666",
-				"2019-03-04");
+				"2019-03-04", false);
 		SeleniumUtils.esperarSegundos(driver, 2);
 		// Comprobamos que aparece la nota en la pagina
 		PO_View.checkElement(driver, "text", "Nanomáquinas");
@@ -467,7 +467,8 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/add')]", 0);
 
-		PO_PrivateView.fillFormAddOffer(driver, "", "Se activan en respuesta al trauma físico", "666", "2019-03-04");
+		PO_PrivateView.fillFormAddOffer(driver, "", "Se activan en respuesta al trauma físico", "666", "2019-03-04",
+				false);
 
 		SeleniumUtils.esperarSegundos(driver, 2);
 		PO_View.getP();
@@ -640,7 +641,7 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.fillSearchOffer(driver, "yelmo");
 		elementos = PO_View.checkElement(driver, "free", "//td/div/div/button");
 		elementos.get(0).click();
-		
+
 		saldos = PO_View.checkElement(driver, "free", "//nav/div/div[2]/ul[3]/li[2]/span");
 		saldo = Double.valueOf(saldos.get(0).getText());
 		Assert.assertTrue(saldo == 100.0 - 20.0 - 80.0);
@@ -658,7 +659,7 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
 		// Y en ese menú la opción de buscar ofertas
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listothers')]", 0);
-		
+
 		PO_PrivateView.fillSearchOffer(driver, "anillo");
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//td/div/div/button");
 		elementos.get(0).click();
@@ -667,7 +668,7 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
 		// Y en ese menú la opción de listar las ofertas compradas
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listpurchases')]", 0);
-		
+
 		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
 		Assert.assertTrue(elementos.size() == 1);
 		PO_View.checkElement(driver, "free", "//td[contains(text(), 'La Comunidad del Anillo')]");
@@ -676,9 +677,268 @@ public class SdiEntrega1702709Tests {
 
 	@Test
 	public void PR27() {
-		PO_HomeView.checkChangeIdiom(driver, "btnSpanish", "btnEnglish", PO_Properties.getSPANISH(),
-				PO_Properties.getENGLISH());
-		// SeleniumUtils.esperarSegundos(driver, 2);
+		// Página principal
+		PO_View.getP();
+		PO_View.checkKey(driver, "language.change", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "signup.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "login.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "welcome.message", PO_Properties.getSPANISH());
+
+		PO_HomeView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.getP();
+		PO_View.checkKey(driver, "language.change", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "signup.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "login.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "welcome.message", PO_Properties.getENGLISH());
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+
+		PO_View.checkKey(driver, "logout.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "offersmanager.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "purchasesmenu.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getENGLISH());
+
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_View.checkKey(driver, "addoffer.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "seeownoffer.message", PO_Properties.getENGLISH());
+
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
+		PO_View.checkKey(driver, "purchasesearch.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "purchasedoffers.message", PO_Properties.getENGLISH());
+
+		PO_HomeView.changeIdiom(driver, "btnSpanish");
+
+		PO_View.checkKey(driver, "logout.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "offersmanager.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "purchasesmenu.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getSPANISH());
+
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_View.checkKey(driver, "addoffer.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "seeownoffer.message", PO_Properties.getSPANISH());
+
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
+		PO_View.checkKey(driver, "purchasesearch.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "purchasedoffers.message", PO_Properties.getSPANISH());
+
+		// Agregar oferta
+
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/add')]", 0);
+
+		SeleniumUtils.esperarSegundos(driver, 2);
+
+		PO_View.checkKey(driver, "title.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "description.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "cost.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "date.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "destacada.message", PO_Properties.getSPANISH());
+
+		PO_HomeView.changeIdiom(driver, "btnEnglish");
+
+		PO_View.checkKey(driver, "title.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "description.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "cost.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "date.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "destacada.message", PO_Properties.getENGLISH());
+
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		// Listado de usuarios
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_View.checkElement(driver, "text", "admin@email.com");
+
+		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+
+		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+		SeleniumUtils.esperarSegundos(driver, 2);
+
+		PO_HomeView.changeIdiom(driver, "btnEnglish");
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkKey(driver, "currentusers.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "email.word", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "surname.message", PO_Properties.getENGLISH());
+		PO_View.checkKey(driver, "users.message", PO_Properties.getENGLISH());
+
+		PO_HomeView.changeIdiom(driver, "btnSpanish");
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkKey(driver, "currentusers.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "email.word", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "name.message", PO_Properties.getSPANISH());
+		PO_View.checkKey(driver, "surname.message", PO_Properties.getSPANISH());
+
+	}
+
+	@Test
+	public void PR28() {
+		driver.navigate().to("http://localhost:8080/user/list");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.checkElement(driver, "id", "loginbtn");
+	}
+
+	@Test
+	public void PR29() {
+		driver.navigate().to("http://localhost:8080/offer/listown");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.checkElement(driver, "id", "loginbtn");
+	}
+
+	@Test
+	public void PR30() {
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+
+		driver.navigate().to("http://localhost:8080/user/list");
+		SeleniumUtils.esperarSegundos(driver, 1);
+		PO_View.checkKey(driver, "forbidden.message", PO_Properties.getSPANISH());
+	}
+
+	@Test
+	public void PR36() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/add')]", 0);
+
+		PO_View.checkElement(driver, "text", "100.0");
+
+		PO_PrivateView.fillFormAddOffer(driver, "SR2 Normandy", "Modelo a escala de una nave mítica.", "134",
+				"2018-11-05", true);
+		SeleniumUtils.esperarSegundos(driver, 2);
+
+		PO_View.checkElement(driver, "text", "SR2 Normandy");
+
+		PO_View.checkElement(driver, "text", "80.0");
+
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "helsreach@yahoo.es", "123456");
+		PO_View.checkElement(driver, "text", "helsreach@yahoo.es");
+
+		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getSPANISH());
+
+		PO_View.checkElement(driver, "text", "SR2 Normandy");
+	}
+
+	@Test
+	public void PR37() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listown')]", 0);
+
+		PO_View.checkElement(driver, "text", "100.0");
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'La Divina Comedia')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
+				0);
+
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkElement(driver, "text", "80.0");
+
+		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		PO_LoginView.fillForm(driver, "helsreach@yahoo.es", "123456");
+		PO_View.checkElement(driver, "text", "helsreach@yahoo.es");
+
+		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getSPANISH());
+
+		PO_View.checkElement(driver, "text", "La Divina Comedia");
+	}
+
+	@Test
+	public void PR38() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
+		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listown')]", 0);
+
+		PO_View.checkElement(driver, "text", "100.0");
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'La Divina Comedia')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
+				0);
+
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkElement(driver, "text", "80.0");
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'TES III: Morrowind')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
+				0);
+
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkElement(driver, "text", "60.0");
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'Guitarra española')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
+				0);
+
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkElement(driver, "text", "40.0");
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'TES III: Morrowind')]/following-sibling::*/div/div/button[contains(@id, 'normalButton')]",
+				0);
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'La Divina Comedia')]/following-sibling::*/div/div/button[contains(@id, 'normalButton')]",
+				0);
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'Guitarra española')]/following-sibling::*/div/div/button[contains(@id, 'normalButton')]",
+				0);
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'La Divina Comedia')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
+				0);
+
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkElement(driver, "text", "20.0");
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'Guitarra española')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
+				0);
+
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.checkElement(driver, "text", "0.0");
+
+		PO_PrivateView.getElementsAndClick(driver,
+				"//td[contains(text(), 'TES III: Morrowind')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
+				0);
+
+		SeleniumUtils.esperarSegundos(driver, 1);
+
+		PO_View.getP();
+		PO_View.checkKey(driver, "Error.saldo", PO_Properties.getSPANISH());
+
+		PO_View.checkElement(driver, "text", "0.0");
+
 	}
 
 }
