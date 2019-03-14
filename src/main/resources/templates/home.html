@@ -7,9 +7,6 @@
 
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
-		<p  th:text="#{authenticated.user}"><span
-				sec:authentication="principal.username" th:inline="text"></span>
-		</p>
 		<h3  th:text="#{destacadas.offers}"  sec:authorize="hasRole('ROLE_USER')"></h3>
 		<div class="table-responsive"  sec:authorize="hasRole('ROLE_USER')">
 			<table class="table table-hover" th:fragment="tableOffers"
@@ -39,7 +36,7 @@
 									$( "#buyButton[[${offer.id}]]" ).click(function() {
 										$.get( "/offer/[[${offer.id}]]/buy", function( data ) {
 											var numberPage = [[${param.page}]];
-											var urlUpdate = '/offer/listothers/update';
+											var urlUpdate = '/home/update';
 											if ( numberPage != null ){
 												urlUpdate += "?page="+numberPage[0];
 											}

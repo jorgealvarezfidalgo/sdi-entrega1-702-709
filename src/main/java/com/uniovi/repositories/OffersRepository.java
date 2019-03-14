@@ -17,6 +17,7 @@ public interface OffersRepository extends CrudRepository<Offer, Long> {
 	@Query("UPDATE Offer SET destacada = ?1 WHERE id = ?2")
 	void updateHighlight(Boolean highlight, Long id);
 
+	@Query("SELECT o FROM Offer o WHERE o.seller = ?1 ORDER BY o.title")
 	Page<Offer> findAllBySeller(Pageable pageable, User seller);
 
 	Page<Offer> findAll(Pageable pageable);

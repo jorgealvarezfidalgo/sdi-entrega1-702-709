@@ -40,7 +40,7 @@
 						<td th:text="${user.email}">nombre@email.com</td>
 						<td th:text="${user.name}">Nombre del usuario</td>
 						<td th:text="${user.lastName}">Apellidos del usuario</td>
-						<td><div>
+						<td th:if="${user.email != email}"><div>
 								<form>
 									<input type="checkbox" name="delete" value="delete"
 										th:id="${'deleteChk' + user.id}"><label

@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.services.OffersService;
 import com.uniovi.services.RolesService;
@@ -48,6 +49,9 @@ public class UsersController {
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable) {
 		Page<User> users = usersService.getUsers(pageable);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		model.addAttribute("email", email);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
 		return "user/list";
@@ -56,9 +60,11 @@ public class UsersController {
 	@RequestMapping("/user/list/update")
 	public String updateList(Model model, Pageable pageable, Principal principal) {
 		Page<User> users = usersService.getUsers(pageable);
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		model.addAttribute("email", email);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
-		System.out.println("Wo");
 		return "user/list :: tableUsers";
 	}
 	
@@ -101,9 +107,22 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
-		model.addAttribute("offerList", offersService.getHighlightedOffers(pageable, activeUser));
+		Page<Offer> offers = offersService.getHighlightedOffers(pageable, activeUser);
+		model.addAttribute("offerList", offers.getContent());
+		model.addAttribute("page", offers);
 		session.setAttribute("saldo", activeUser.getSaldo());
 		return "home";
+	}
+	
+	@RequestMapping("/home/update")
+	public String updateHome(HttpSession session, Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = offersService.getHighlightedOffers(pageable, user);
+		model.addAttribute("offerList", offers.getContent());
+		model.addAttribute("page", offers);
+		session.setAttribute("saldo", user.getSaldo());
+		return "home :: tableOffers";
 	}
 	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)

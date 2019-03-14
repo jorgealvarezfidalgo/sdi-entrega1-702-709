@@ -13,7 +13,6 @@ public interface UsersRepository extends CrudRepository<User, Long> {
 
 	String findByPassword(String password);
 	
-	@Query("SELECT r FROM User r WHERE role!='ROLE_ADMIN'")
 	Page<User> findAll(Pageable pageable);
 
 

@@ -44,11 +44,12 @@ public class OffersControllers {
 	private OfferFormValidator offerFormValidator;
 
 	@RequestMapping("/offer/listown")
-	public String getList(Model model, Pageable pageable, Principal principal) {
+	public String getList(HttpSession session, Model model, Pageable pageable, Principal principal) {
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
-
+		
+		session.setAttribute("saldo", user.getSaldo());
 		model.addAttribute("offerList", offers.getContent());
 		model.addAttribute("page", offers);
 		return "offer/listown";
@@ -74,6 +75,7 @@ public class OffersControllers {
 			usersService.updateUser(user);
 			session.setAttribute("saldo", user.getSaldo());
 		}
+		offer.setDate(new Date(System.currentTimeMillis()));
 		offersService.addOffer(offer);
 		return "redirect:/offer/listown";
 	}
@@ -85,9 +87,13 @@ public class OffersControllers {
 	}
 
 	@RequestMapping(value = "/offer/add")
-	public String getOffer(Model model) {
+	public String getOffer(Model model, Principal principal, HttpSession session) {
 		model.addAttribute("offer", new Offer());
 		model.addAttribute("usersList", usersService.getUsers());
+		
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		session.setAttribute("saldo", user.getSaldo());
 
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = new Date(System.currentTimeMillis());
@@ -111,7 +117,7 @@ public class OffersControllers {
 	}
 
 	@RequestMapping("/offer/listothers")
-	public String getListOthers(Model model, Pageable pageable, Principal principal,
+	public String getListOthers(HttpSession session, Model model, Pageable pageable, Principal principal,
 			@RequestParam(value = "", required = false) String searchText) {
 		String email = principal.getName();
 		User buyer = usersService.getUserByEmail(email);
@@ -122,6 +128,7 @@ public class OffersControllers {
 		} else {
 			offers = offersService.getOtherUsersOffers(pageable, buyer);
 		}
+		session.setAttribute("saldo", buyer.getSaldo());
 		model.addAttribute("offerList", offers.getContent());
 		model.addAttribute("page", offers);
 		return "offer/listothers";

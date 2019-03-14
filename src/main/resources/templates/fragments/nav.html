@@ -1,5 +1,6 @@
 <!-- nav.html -->
-<nav class="navbar navbar-inverse"  th:fragment="nav" id="nav">
+<div th:fragment="nav" id="nav">
+<nav class="navbar navbar-inverse" >
 	<div class="container-fluid">
 		<div class="navbar-header">
 			<button type="button" class="navbar-toggle" data-toggle="collapse"
@@ -7,7 +8,7 @@
 				<span class="icon-bar"></span> <span class="icon-bar"></span> <span
 					class="icon-bar"></span>
 			</button>
-			<img src="/img/user.png" alt="logo" />
+			<a href="/home"><img src="/img/home.png" alt="logo" /></a>
 		</div>
 
 
@@ -49,7 +50,7 @@
 				
 				<li sec:authorize="isAuthenticated()"><span
 					class="glyphicon glyphicon-email"
-					sec:authentication="principal.username" th:inline="text"></span></li>
+					sec:authentication="principal.username" th:inline="text" id="navemail"></span></li>
 				<li sec:authorize="hasRole('ROLE_USER')"><span
 					th:text="${session.saldo}" class="glyphicon glyphicon-saldo"></span></li>
 				<li class="dropdown"><a id="btnLanguage"
@@ -91,3 +92,4 @@
 		</div>
 	</div>
 </nav>
+</div>
