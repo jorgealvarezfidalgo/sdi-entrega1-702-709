@@ -376,7 +376,6 @@ public class SdiEntrega1702709Tests {
 		eliminar.get(0).click();
 
 		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.esperarSegundos(driver, 2);
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete.getEmail(), PO_View.getTimeout());
 
 	}
@@ -400,7 +399,6 @@ public class SdiEntrega1702709Tests {
 		eliminar.get(eliminar.size() - 1).click();
 
 		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.esperarSegundos(driver, 2);
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete.getEmail(), PO_View.getTimeout());
 
 	}
@@ -432,7 +430,6 @@ public class SdiEntrega1702709Tests {
 		eliminar.get(3).click();
 
 		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.esperarSegundos(driver, 1);
 
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete1.getEmail(), PO_View.getTimeout());
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete2.getEmail(), PO_View.getTimeout());
@@ -451,9 +448,8 @@ public class SdiEntrega1702709Tests {
 
 		PO_PrivateView.fillFormAddOffer(driver, "Nanomáquinas", "Se activan en respuesta al trauma físico", "666",
 				"2019-03-04", false);
-		SeleniumUtils.esperarSegundos(driver, 2);
 		// Comprobamos que aparece la nota en la pagina
-		PO_View.checkElement(driver, "text", "Nanomáquinas");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "Nanomáquinas", PO_View.getTimeout());
 	}
 
 	@Test
@@ -470,7 +466,6 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.fillFormAddOffer(driver, "", "Se activan en respuesta al trauma físico", "666", "2019-03-04",
 				false);
 
-		SeleniumUtils.esperarSegundos(driver, 2);
 		PO_View.getP();
 		PO_RegisterView.checkKey(driver, "Error.empty", PO_Properties.getSPANISH());
 
@@ -532,9 +527,7 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'Guitarra española')]/following-sibling::*/a[contains(@href, 'offer/delete')]",
 				0);
-		SeleniumUtils.esperarSegundos(driver, 2);
-
-		elementos = PO_View.checkElement(driver, "free", "//tr");
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tr", PO_View.getTimeout());
 		Assert.assertTrue(elementos.size() == 3);
 		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, "Guitarra española", PO_View.getTimeout());
 		PO_View.checkElement(driver, "free", "//td[contains(text(), 'La Divina Comedia')]");
@@ -562,9 +555,8 @@ public class SdiEntrega1702709Tests {
 		Assert.assertTrue(elementos.size() == 5);
 		By enlace = By.xpath("//html/body/div/div[2]/ul/li[3]/a");
 		driver.findElement(enlace).click();
-		SeleniumUtils.esperarSegundos(driver, 1);
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
 		// Y 4 en la segunda
-		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
 		Assert.assertTrue(elementos.size() == 4);
 	}
 
@@ -685,7 +677,6 @@ public class SdiEntrega1702709Tests {
 		PO_View.checkKey(driver, "welcome.message", PO_Properties.getSPANISH());
 
 		PO_HomeView.changeIdiom(driver, "btnEnglish");
-		SeleniumUtils.esperarSegundos(driver, 1);
 
 		PO_View.getP();
 		PO_View.checkKey(driver, "language.change", PO_Properties.getENGLISH());
@@ -731,8 +722,6 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/add')]", 0);
 
-		SeleniumUtils.esperarSegundos(driver, 2);
-
 		PO_View.checkKey(driver, "title.message", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "description.message", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "cost.message", PO_Properties.getSPANISH());
@@ -758,10 +747,8 @@ public class SdiEntrega1702709Tests {
 		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
 
 		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
-		SeleniumUtils.esperarSegundos(driver, 2);
 
 		PO_HomeView.changeIdiom(driver, "btnEnglish");
-		SeleniumUtils.esperarSegundos(driver, 1);
 
 		PO_View.checkKey(driver, "currentusers.message", PO_Properties.getENGLISH());
 		PO_View.checkKey(driver, "email.word", PO_Properties.getENGLISH());
@@ -769,7 +756,6 @@ public class SdiEntrega1702709Tests {
 		PO_View.checkKey(driver, "users.message", PO_Properties.getENGLISH());
 
 		PO_HomeView.changeIdiom(driver, "btnSpanish");
-		SeleniumUtils.esperarSegundos(driver, 1);
 
 		PO_View.checkKey(driver, "currentusers.message", PO_Properties.getSPANISH());
 		PO_View.checkKey(driver, "email.word", PO_Properties.getSPANISH());
@@ -781,15 +767,13 @@ public class SdiEntrega1702709Tests {
 	@Test
 	public void PR28() {
 		driver.navigate().to("http://localhost:8080/user/list");
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.checkElement(driver, "id", "loginbtn");
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "loginbtn", PO_View.getTimeout());
 	}
 
 	@Test
 	public void PR29() {
 		driver.navigate().to("http://localhost:8080/offer/listown");
-		SeleniumUtils.esperarSegundos(driver, 1);
-		PO_View.checkElement(driver, "id", "loginbtn");
+		SeleniumUtils.EsperaCargaPagina(driver, "id", "loginbtn", PO_View.getTimeout());
 	}
 
 	@Test
@@ -799,7 +783,6 @@ public class SdiEntrega1702709Tests {
 		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
 
 		driver.navigate().to("http://localhost:8080/user/list");
-		SeleniumUtils.esperarSegundos(driver, 1);
 		PO_View.checkKey(driver, "forbidden.message", PO_Properties.getSPANISH());
 	}
 
@@ -817,17 +800,14 @@ public class SdiEntrega1702709Tests {
 
 		PO_PrivateView.fillFormAddOffer(driver, "SR2 Normandy", "Modelo a escala de una nave mítica.", "134",
 				"2018-11-05", true);
-		SeleniumUtils.esperarSegundos(driver, 2);
-
-		PO_View.checkElement(driver, "text", "SR2 Normandy");
-
-		PO_View.checkElement(driver, "text", "80.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "SR2 Normandy", PO_View.getTimeout());
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "80.0", PO_View.getTimeout());
 
 		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
 
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "helsreach@yahoo.es", "123456");
-		PO_View.checkElement(driver, "text", "helsreach@yahoo.es");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "helsreach@yahoo.es", PO_View.getTimeout());
 
 		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getSPANISH());
 
@@ -851,17 +831,17 @@ public class SdiEntrega1702709Tests {
 				"//td[contains(text(), 'La Divina Comedia')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
 
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		PO_View.checkElement(driver, "text", "80.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "80.0", PO_View.getTimeout());
 
 		PO_HomeView.clickOption(driver, "logout", "class", "btn btn-primary");
 
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "helsreach@yahoo.es", "123456");
-		PO_View.checkElement(driver, "text", "helsreach@yahoo.es");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "helsreach@yahoo.es", PO_View.getTimeout());
 
 		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getSPANISH());
+		
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "La Divina Comedia", PO_View.getTimeout());
 
 		PO_View.checkElement(driver, "text", "La Divina Comedia");
 	}
@@ -876,31 +856,25 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'offers-menu')]/a", 0);
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listown')]", 0);
 
-		PO_View.checkElement(driver, "text", "100.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "100.0", PO_View.getTimeout());
 
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'La Divina Comedia')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
 
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		PO_View.checkElement(driver, "text", "80.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "80.0", PO_View.getTimeout());
 
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'TES III: Morrowind')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
 
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		PO_View.checkElement(driver, "text", "60.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "60.0", PO_View.getTimeout());
 
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'Guitarra española')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
 
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		PO_View.checkElement(driver, "text", "40.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "40.0", PO_View.getTimeout());
 
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'TES III: Morrowind')]/following-sibling::*/div/div/button[contains(@id, 'normalButton')]",
@@ -916,23 +890,18 @@ public class SdiEntrega1702709Tests {
 				"//td[contains(text(), 'La Divina Comedia')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
 
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		PO_View.checkElement(driver, "text", "20.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "20.0", PO_View.getTimeout());
 
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'Guitarra española')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
 
-		SeleniumUtils.esperarSegundos(driver, 1);
-
-		PO_View.checkElement(driver, "text", "0.0");
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "0.0", PO_View.getTimeout());
 
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'TES III: Morrowind')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
 
-		SeleniumUtils.esperarSegundos(driver, 1);
 
 		PO_View.getP();
 		PO_View.checkKey(driver, "Error.saldo", PO_Properties.getSPANISH());

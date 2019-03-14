@@ -57,22 +57,15 @@ public class UsersController {
 		return "user/list";
 	}
 	
-	@RequestMapping("/user/list/update")
-	public String updateList(Model model, Pageable pageable, Principal principal) {
+	@RequestMapping("/user/delete/{id}")
+	public String delete(@PathVariable Long id, Pageable pageable, Model model) {
+		usersService.deleteUser(id);
 		Page<User> users = usersService.getUsers(pageable);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		model.addAttribute("email", email);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
-		return "user/list :: tableUsers";
-	}
-	
-	@RequestMapping("/user/delete/{id}")
-	public String delete(@PathVariable Long id, Pageable pageable, Model model) {
-		usersService.deleteUser(id);
-		Page<User> users = usersService.getUsers(pageable);
-		model.addAttribute("usersList", users.getContent());
 		return "user/list :: tableUsers";
 	}
 

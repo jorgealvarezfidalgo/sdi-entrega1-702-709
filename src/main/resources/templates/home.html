@@ -59,7 +59,7 @@
 				</tbody>
 			</table>
 		</div>
-		<footer th:replace="fragments/pagination" />
+		<footer sec:authorize="hasRole('ROLE_USER')" th:replace="fragments/pagination" />
 	</div>
 
 	<footer th:replace="fragments/footer" />

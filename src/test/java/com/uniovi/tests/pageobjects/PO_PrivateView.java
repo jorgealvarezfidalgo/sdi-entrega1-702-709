@@ -24,9 +24,6 @@ public class PO_PrivateView extends PO_NavView {
 		WebElement cost = driver.findElement(By.name("cost"));    
 		cost.clear();    
 		cost.sendKeys(costp);   
-		WebElement date = driver.findElement(By.name("date"));    
-		date.clear();    
-		date.sendKeys(datep); 
 		WebElement destacada = driver.findElement(By.name("destacada")); 
 		if(destacadap)
 			destacada.click();
