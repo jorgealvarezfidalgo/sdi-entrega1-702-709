@@ -34,7 +34,10 @@
 									<script th:inline="javascript">
 									/*<![CDATA[*/
 									$( "#buyButton[[${offer.id}]]" ).click(function() {
-										$.get( "/offer/[[${offer.id}]]/buy", function( data ) {
+										$.get( "/home/offer/[[${offer.id}]]/buy", function( data ) {
+											var urlUpdate = '/offer/reload/saldo';
+											$("#nav").load(urlUpdate);
+											
 											var numberPage = [[${param.page}]];
 											var urlUpdate = '/home/update';
 											if ( numberPage != null ){
@@ -56,6 +59,7 @@
 				</tbody>
 			</table>
 		</div>
+		<footer th:replace="fragments/pagination" />
 	</div>
 
 	<footer th:replace="fragments/footer" />

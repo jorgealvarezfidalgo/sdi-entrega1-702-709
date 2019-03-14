@@ -114,17 +114,6 @@ public class UsersController {
 		return "home";
 	}
 	
-	@RequestMapping("/home/update")
-	public String updateHome(HttpSession session, Model model, Pageable pageable, Principal principal) {
-		String email = principal.getName();
-		User user = usersService.getUserByEmail(email);
-		Page<Offer> offers = offersService.getHighlightedOffers(pageable, user);
-		model.addAttribute("offerList", offers.getContent());
-		model.addAttribute("page", offers);
-		session.setAttribute("saldo", user.getSaldo());
-		return "home :: tableOffers";
-	}
-	
 	@RequestMapping(value="/logout", method = RequestMethod.GET)
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();

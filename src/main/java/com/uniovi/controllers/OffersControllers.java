@@ -142,9 +142,29 @@ public class OffersControllers {
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/listothers :: tableOffers";
 	}
+	
+	@RequestMapping("/home/update")
+	public String updateHome(HttpSession session, Model model, Pageable pageable, Principal principal) {
+		String email = principal.getName();
+		User user = usersService.getUserByEmail(email);
+		Page<Offer> offers = offersService.getHighlightedOffers(pageable, user);
+		model.addAttribute("offerList", offers.getContent());
+		return "home :: tableOffers";
+	}
 
 	@RequestMapping(value = "/offer/{id}/buy", method = RequestMethod.GET)
 	public String buyOffer(Model model, Principal principal, @PathVariable Long id, HttpSession session) {
+		buyOfferAuxs(model, id, principal, session);	
+		return "redirect:/offer/listothers";
+	}
+	
+	@RequestMapping(value = "/home/offer/{id}/buy", method = RequestMethod.GET)
+	public String buyOfferHome(Model model, Principal principal, @PathVariable Long id, HttpSession session) {
+		buyOfferAuxs(model, id, principal, session);
+		return "redirect:/home";
+	}
+	
+	private void buyOfferAuxs(Model model,Long id, Principal principal, HttpSession session) {
 		String email = principal.getName();
 		User buyer = usersService.getUserByEmail(email);
 		Offer offer = offersService.findById(id);
@@ -156,8 +176,6 @@ public class OffersControllers {
 			session.setAttribute("saldo", buyer.getSaldo());
 		} else
 			model.addAttribute("errorsaldo", "saldo insuficiente");
-		
-		return "redirect:/offer/listothers";
 	}
 
 	@RequestMapping("/offer/listpurchases")
@@ -212,5 +230,7 @@ public class OffersControllers {
 	public String updateSaldo(Model model, Pageable pageable, Principal principal) {
 		return "offer/listown :: nav";
 	}
+	
+	
 
 }
