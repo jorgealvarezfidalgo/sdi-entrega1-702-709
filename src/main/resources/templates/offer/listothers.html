@@ -12,10 +12,10 @@
 		<p id="errorsaldo" th:text="${errorsaldo}"></p>
 		<form class="navbar-form" action="/offer/listothers">
 			<div class="form-group">
-				<input name="searchText" type="text" class="form-control" size="50"
+				<input name="searchText" type="text" id="cuadroBusqueda" class="form-control" size="50"
 					th:placeholder="#{searchtextbuy.message}">
 			</div>
-			<button type="submit" class="btn btn-default"
+			<button type="submit" id="botonBusqueda" class="btn btn-default"
 				th:text="#{search.message}"></button>
 		</form>
 		<div class="table-responsive">

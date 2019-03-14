@@ -35,4 +35,12 @@ public class PO_PrivateView extends PO_NavView {
 		List<WebElement>  elementos = PO_View.checkElement(driver, "free", path); 
 		elementos.get(element).click();
 	}
+	
+	static public void fillSearchOffer(WebDriver driver, String searchText) {
+		WebElement searchField = driver.findElement(By.className("form-control"));
+		searchField.clear();
+		searchField.sendKeys(searchText);
+		By boton = By.className("btn");    
+		driver.findElement(boton).click();
+	}
 }

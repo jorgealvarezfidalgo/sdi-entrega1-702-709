@@ -92,7 +92,6 @@ public class OffersControllers {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date today = new Date(System.currentTimeMillis());
 		String todayAsString = df.format(today);
-		System.out.println(todayAsString);
 		model.addAttribute("currentDate", todayAsString);
 		return "offer/add";
 	}
@@ -151,7 +150,6 @@ public class OffersControllers {
 		} else
 			model.addAttribute("errorsaldo", "saldo insuficiente");
 		
-		System.out.println(offer.getBuyer().getEmail());
 		return "redirect:/offer/listothers";
 	}
 
