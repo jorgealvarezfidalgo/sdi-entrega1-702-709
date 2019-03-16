@@ -51,8 +51,8 @@ public class SdiEntrega1702709Tests {
 
 	// En Windows (Debe ser la versión 65.0.1 y desactivar las
 	// actualizacioens automáticas)):
-	static String PathFirefox65 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver024 = "C:\\Users\\woest\\OneDrive\\Documentos\\SDI\\geckodriver024win64.exe";
+	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+	static String Geckdriver024 = "C:\\Users\\linom\\Google Drive\\Informática\\Sistemas Distribuidos e Internet (SDI)\\5. Web testing con Selenium\\Material-Sesión5\\geckodriver024win64.exe";
 
 	// //Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);

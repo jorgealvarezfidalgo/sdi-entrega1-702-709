@@ -9,13 +9,17 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
+
 @Entity
 public class Message {
 
 	@Id
 	@GeneratedValue
 	private Long id;
-	@Temporal(TemporalType.DATE)
+	@DateTimeFormat(pattern = "dd-MM-yyyy HH:mm")
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date date;
 	private String text;
 
@@ -25,11 +29,14 @@ public class Message {
 	@ManyToOne
 	private Chat chat;
 
-	public Message(Date date, String text, User sender, Chat chat) {
-		this.date = date;
-		this.text = text;
-		this.sender = sender;
+	public Message() {
+	}
+
+	public Message(Chat chat, User sender, String text) {
 		this.chat = chat;
+		this.sender = sender;
+		this.text = text;
+		this.date = new Date();
 	}
 
 	public Date getDate() {

@@ -1,6 +1,8 @@
 package com.uniovi.entities;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -15,20 +17,23 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 public class Chat {
-	
+
 	@Id
 	@GeneratedValue
 	private Long id;
-	
+
 	@ManyToOne
 	private Offer offer;
-	
+
 	@ManyToOne
 	private User creator;
-	
+
 	@JsonIgnoreProperties("chat")
 	@OneToMany(mappedBy = "chat", cascade = CascadeType.ALL)
-	private Set<Message> messages = new HashSet<>();
+	private List<Message> messages = new ArrayList<>();
+
+	public Chat() {
+	}
 
 	public Chat(Offer offer, User creator) {
 		this.offer = offer;
@@ -59,11 +64,11 @@ public class Chat {
 		this.creator = creator;
 	}
 
-	public Set<Message> getMessages() {
+	public List<Message> getMessages() {
 		return messages;
 	}
 
-	public void setMessages(Set<Message> messages) {
+	public void setMessages(List<Message> messages) {
 		this.messages = messages;
 	}
 

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head th:replace="fragments/head" />
+<body>
+
+	<!-- Barra de Navegación superior -->
+	<nav th:replace="fragments/nav" />
+
+	<div class="container">
+		<h2 th:text="#{chatlist.message}"></h2>
+		<div class="table-responsive">
+			<table class="table table-hover" th:fragment="tableChats"
+				id="tableChats">
+				<thead>
+					<tr>
+						<th th:text="#{email.message}"></th>
+						<th th:text="#{description.message}"></th>
+						<th class="col-md-1"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="chat : ${chatList}">
+						<td th:text="${chat.offer.seller.email}">A</td>
+						<td th:text="${chat.offer.description}">10</td>
+						<td><a th:href="${'/chat/chat/' + chat.id}"
+							th:text="#{chat.message}"></a></td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<footer th:replace="fragments/pagination" />
+	</div>
+
+	<footer th:replace="fragments/footer" />
+</body>
+</html>

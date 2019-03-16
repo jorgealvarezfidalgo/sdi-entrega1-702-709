@@ -138,7 +138,7 @@ public class User {
 	}
 
 	public void setPurchases(Set<Offer> purchases) {
-		this.offers = purchases;
+		this.purchases = purchases;
 	}
 
 }

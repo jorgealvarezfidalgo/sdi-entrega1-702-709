@@ -136,4 +136,12 @@ public class Offer {
 		this.destacada = destacada;
 	}
 
+	public Set<Chat> getChats() {
+		return chats;
+	}
+
+	public void setChats(Set<Chat> chats) {
+		this.chats = chats;
+	}
+
 }

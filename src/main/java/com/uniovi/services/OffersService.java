@@ -19,6 +19,9 @@ public class OffersService {
 
 	@Autowired
 	private OffersRepository offersRepository;
+	
+	@Autowired
+	private UsersService usersService;
 
 	public Page<Offer> getOffers(Pageable pageable) {
 		Page<Offer> offers = offersRepository.findAll(pageable);
@@ -85,6 +88,13 @@ public class OffersService {
 		if (offer.getSeller().getEmail().equals(email)) {
 			offersRepository.updateHighlight(highlight, id);
 		}
+	}
+	
+	public void buyOffer(User buyer, Offer offer) {
+		buyer.setSaldo(buyer.getSaldo() - offer.getCost());
+		offer.setBuyer(buyer);
+		addOffer(offer);
+		usersService.updateUser(buyer);
 	}
 
 }

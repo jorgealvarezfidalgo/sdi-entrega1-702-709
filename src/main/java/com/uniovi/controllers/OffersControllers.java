@@ -169,10 +169,7 @@ public class OffersControllers {
 		User buyer = usersService.getUserByEmail(email);
 		Offer offer = offersService.findById(id);
 		if (buyer.getSaldo() >= offer.getCost()) {
-			buyer.setSaldo(buyer.getSaldo() - offer.getCost());
-			offer.setBuyer(buyer);
-			offersService.addOffer(offer);
-			usersService.updateUser(buyer);
+			offersService.buyOffer(buyer, offer);
 			session.setAttribute("saldo", buyer.getSaldo());
 		} else
 			model.addAttribute("errorsaldo", "saldo insuficiente");
