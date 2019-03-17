@@ -156,7 +156,7 @@ public class InsertSampleDataService {
 					add(new Offer("Yelmo templario",
 							"Siglo XII. Perteneciente a la Orden de los Pobres Compañeros de Cristo"
 									+ " y del Templo de Salomón. ",
-							df.parse("2018-01-04"), 40.0, user5));
+							df.parse("2018-01-04"), 30.7, user5));
 					add(new Offer("Cheytac Intervención", "Fusil de largo alcance.", df.parse("2019-08-17"), 25.0,
 							user5));
 					add(new Offer("Libro de salmos ucraniano.", "Encontrado en Pripyat. Ligeramente irradiado.", null,

@@ -417,14 +417,20 @@ public class SdiEntrega1702709Tests {
 		// Buscamos con el campo vacío
 		PO_PrivateView.fillSearchOffer(driver, "");
 
-		// Hay 9 ofertas en total. 5 en la primera página
+		// Hay 12 ofertas en total. 5 en la primera página
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
 		Assert.assertTrue(elementos.size() == 5);
 		By enlace = By.xpath("//html/body/div/div[2]/ul/li[3]/a");
 		driver.findElement(enlace).click();
 		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
-		// Y 4 en la segunda
-		Assert.assertTrue(elementos.size() == 4);
+		// Y 5 en la segunda
+		Assert.assertTrue(elementos.size() == 5);
+
+		enlace = By.xpath("//html/body/div/div[2]/ul/li[4]/a");
+		driver.findElement(enlace).click();
+		elementos = SeleniumUtils.EsperaCargaPagina(driver, "free", "//tbody/tr", PO_View.getTimeout());
+		// Y 2 en la tercera
+		Assert.assertTrue(elementos.size() == 2);
 	}
 
 	@Test
@@ -462,17 +468,17 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listothers')]", 0);
 
 		// Buscamos productos que tengan en su título "la"
-		PO_PrivateView.fillSearchOffer(driver, "la");
+		PO_PrivateView.fillSearchOffer(driver, "cadillac");
 		List<WebElement> saldos = PO_View.checkElement(driver, "free", "//nav/div/div[2]/ul[3]/li[2]/span");
 		double saldo = Double.valueOf(saldos.get(0).getText());
-		Assert.assertTrue(saldo == 100.0);
+		Assert.assertTrue(saldo == 75.7);
 
 		// Compramos un podructo de 20
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//td/div/div/button");
-		elementos.get(1).click();
+		elementos.get(0).click();
 		saldos = PO_View.checkElement(driver, "free", "//nav/div/div[2]/ul[3]/li[2]/span");
 		saldo = Double.valueOf(saldos.get(0).getText());
-		Assert.assertTrue(saldo == 100.0 - 20.0);
+		Assert.assertTrue(saldo == 75.7 - 45.0);
 	}
 
 	@Test
@@ -489,10 +495,10 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listothers')]", 0);
 
 		// Buscamos productos que tengan en su título "anillo"
-		PO_PrivateView.fillSearchOffer(driver, "anillo");
+		PO_PrivateView.fillSearchOffer(driver, "cadillac");
 		List<WebElement> saldos = PO_View.checkElement(driver, "free", "//nav/div/div[2]/ul[3]/li[2]/span");
 		double saldo = Double.valueOf(saldos.get(0).getText());
-		Assert.assertTrue(saldo == 100.0);
+		Assert.assertTrue(saldo == 75.7);
 
 		// Compramos dos productos que suman 100
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//td/div/div/button");
@@ -503,7 +509,7 @@ public class SdiEntrega1702709Tests {
 
 		saldos = PO_View.checkElement(driver, "free", "//nav/div/div[2]/ul[3]/li[2]/span");
 		saldo = Double.valueOf(saldos.get(0).getText());
-		Assert.assertTrue(saldo == 100.0 - 20.0 - 80.0);
+		Assert.assertTrue(saldo == 75.7 - 45.0 - 30.7);
 	}
 
 	@Test
@@ -516,21 +522,14 @@ public class SdiEntrega1702709Tests {
 
 		// Seleccionamos el menú del nav para comprar
 		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
-		// Y en ese menú la opción de buscar ofertas
-		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listothers')]", 0);
-
-		PO_PrivateView.fillSearchOffer(driver, "anillo");
-		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//td/div/div/button");
-		elementos.get(0).click();
-
-		// Seleccionamos el menú del nav para comprar
-		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
 		// Y en ese menú la opción de listar las ofertas compradas
 		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listpurchases')]", 0);
 
-		elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
-		Assert.assertTrue(elementos.size() == 1);
-		PO_View.checkElement(driver, "free", "//td[contains(text(), 'La Comunidad del Anillo')]");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		Assert.assertTrue(elementos.size() == 2);
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'Paraguas negro')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), 'Nokia 3000')]");
+
 
 	}
 
@@ -715,16 +714,13 @@ public class SdiEntrega1702709Tests {
 		// Seleccionamos el menú del nav para ir al listado de chats
 		PO_PrivateView.getElementsAndClick(driver, "//li/a[contains(@href, '/chat/list')]", 0);
 		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
-		
+
 		// Comprobamos que hay el número de chats adecuados
-		Assert.assertTrue(elementos.size() == 4);
-		
+		Assert.assertTrue(elementos.size() == 1);
+
 		// Y ques esos elementos son los adecuados
 		PO_View.checkElement(driver, "text", "Clásico indiscutible de Dante Alighieri");
-		PO_View.checkElement(driver, "text", "Ligeramente oxidado");
-		PO_View.checkElement(driver, "text", "Absolutamente indestructible");
-		PO_View.checkElement(driver, "text", "Edición GOTY");
-		
+
 	}
 
 	@Test
