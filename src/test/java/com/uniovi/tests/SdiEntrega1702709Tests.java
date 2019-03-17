@@ -44,25 +44,26 @@ import com.uniovi.tests.util.SeleniumUtils;
 @SpringBootTest
 public class SdiEntrega1702709Tests {
 
-	@Autowired
-	private UsersService usersService;
-	@Autowired
-	private RolesService rolesService;
-	@Autowired
-	private UsersRepository usersRepository;
-	@Autowired
-	private InsertSampleDataService insertDataService;
+//	@Autowired
+//	private UsersService usersService;
+//	@Autowired
+//	private RolesService rolesService;
+//	@Autowired
+//	private UsersRepository usersRepository;
+//	@Autowired
+//	private InsertSampleDataService insertDataService;
 
 	// En Windows (Debe ser la versión 65.0.1 y desactivar las
 	// actualizacioens automáticas)):
-	static String PathFirefox65 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
-	static String Geckdriver024 = "C:\\Users\\woest\\OneDrive\\Documentos\\SDI\\geckodriver024win64.exe";
-//	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
-//	static String Geckdriver024 = "C:\\Users\\linom\\Google Drive\\Informática\\Sistemas Distribuidos e Internet (SDI)\\5. Web testing con Selenium\\Material-Sesión5\\geckodriver024win64.exe";
+//	static String PathFirefox65 = "C:\\Program Files (x86)\\Mozilla Firefox\\firefox.exe";
+//	static String Geckdriver024 = "C:\\Users\\woest\\OneDrive\\Documentos\\SDI\\geckodriver024win64.exe";
+	static String PathFirefox65 = "C:\\Program Files\\Mozilla Firefox\\firefox.exe";
+	static String Geckdriver024 = "C:\\Users\\linom\\Google Drive\\Informática\\Sistemas Distribuidos e Internet (SDI)\\5. Web testing con Selenium\\Material-Sesión5\\geckodriver024win64.exe";
 
 	// //Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
-	static String URL = "http://localhost:8080";
+	static String URL = "http://35.181.48.225:8080";
+	
 
 	public static WebDriver getDriver(String PathFirefox, String Geckdriver) {
 		System.setProperty("webdriver.firefox.bin", PathFirefox);
@@ -78,8 +79,8 @@ public class SdiEntrega1702709Tests {
 	}
 
 	public void initDb() {
-		usersRepository.deleteAll();
-		insertDataService.init();
+//		usersRepository.deleteAll();
+//		insertDataService.init();
 
 	}
 
@@ -227,83 +228,83 @@ public class SdiEntrega1702709Tests {
 		PO_View.checkElement(driver, "free", "//td[contains(text(), 'alpha-legion@gmail.com')]");
 	}
 
-	@Test
-	public void PR13() {
-		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+//	@Test
+//	public void PR13() {
+//		// Vamos al formulario de logueo.
+//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+//		// Rellenamos el formulario
+//		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+//		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+//
+//		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+//		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
+//		String id = eliminar.get(0).getAttribute("id").replaceFirst("deleteChk", "");
+//
+//		User userToDelete = usersService.getUser(Long.parseLong(id, 10));
+//
+//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete.getEmail() + "')]");
+//		eliminar.get(0).click();
+//
+//		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
+//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete.getEmail(), PO_View.getTimeout());
+//
+//	}
 
-		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
-		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
-		String id = eliminar.get(0).getAttribute("id").replaceFirst("deleteChk", "");
+//	@Test
+//	public void PR14() {
+//		// Vamos al formulario de logueo.
+//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+//		// Rellenamos el formulario
+//		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+//		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+//
+//		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+//
+//		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
+//		String id = eliminar.get(eliminar.size() - 1).getAttribute("id").replaceFirst("deleteChk", "");
+//
+//		User userToDelete = usersService.getUser(Long.parseLong(id, 10));
+//
+//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete.getEmail() + "')]");
+//		eliminar.get(eliminar.size() - 1).click();
+//
+//		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
+//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete.getEmail(), PO_View.getTimeout());
+//
+//	}
 
-		User userToDelete = usersService.getUser(Long.parseLong(id, 10));
-
-		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete.getEmail() + "')]");
-		eliminar.get(0).click();
-
-		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete.getEmail(), PO_View.getTimeout());
-
-	}
-
-	@Test
-	public void PR14() {
-		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
-
-		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
-
-		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
-		String id = eliminar.get(eliminar.size() - 1).getAttribute("id").replaceFirst("deleteChk", "");
-
-		User userToDelete = usersService.getUser(Long.parseLong(id, 10));
-
-		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete.getEmail() + "')]");
-		eliminar.get(eliminar.size() - 1).click();
-
-		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete.getEmail(), PO_View.getTimeout());
-
-	}
-
-	@Test
-	public void PR15() {
-		// Vamos al formulario de logueo.
-		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-		// Rellenamos el formulario
-		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
-
-		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
-
-		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
-		String id1 = eliminar.get(1).getAttribute("id").replaceFirst("deleteChk", "");
-		String id2 = eliminar.get(2).getAttribute("id").replaceFirst("deleteChk", "");
-		String id3 = eliminar.get(3).getAttribute("id").replaceFirst("deleteChk", "");
-
-		User userToDelete1 = usersService.getUser(Long.parseLong(id1, 10));
-		User userToDelete2 = usersService.getUser(Long.parseLong(id2, 10));
-		User userToDelete3 = usersService.getUser(Long.parseLong(id3, 10));
-
-		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete1.getEmail() + "')]");
-		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete2.getEmail() + "')]");
-		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete3.getEmail() + "')]");
-		eliminar.get(1).click();
-		eliminar.get(2).click();
-		eliminar.get(3).click();
-
-		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete1.getEmail(), PO_View.getTimeout());
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete2.getEmail(), PO_View.getTimeout());
-		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete3.getEmail(), PO_View.getTimeout());
-	}
+//	@Test
+//	public void PR15() {
+//		// Vamos al formulario de logueo.
+//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+//		// Rellenamos el formulario
+//		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+//		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+//
+//		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+//
+//		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
+//		String id1 = eliminar.get(1).getAttribute("id").replaceFirst("deleteChk", "");
+//		String id2 = eliminar.get(2).getAttribute("id").replaceFirst("deleteChk", "");
+//		String id3 = eliminar.get(3).getAttribute("id").replaceFirst("deleteChk", "");
+//
+//		User userToDelete1 = usersService.getUser(Long.parseLong(id1, 10));
+//		User userToDelete2 = usersService.getUser(Long.parseLong(id2, 10));
+//		User userToDelete3 = usersService.getUser(Long.parseLong(id3, 10));
+//
+//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete1.getEmail() + "')]");
+//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete2.getEmail() + "')]");
+//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete3.getEmail() + "')]");
+//		eliminar.get(1).click();
+//		eliminar.get(2).click();
+//		eliminar.get(3).click();
+//
+//		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
+//
+//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete1.getEmail(), PO_View.getTimeout());
+//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete2.getEmail(), PO_View.getTimeout());
+//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete3.getEmail(), PO_View.getTimeout());
+//	}
 
 	@Test
 	public void PR16() {

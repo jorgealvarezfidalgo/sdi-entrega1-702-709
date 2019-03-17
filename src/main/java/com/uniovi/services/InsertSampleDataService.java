@@ -168,32 +168,6 @@ public class InsertSampleDataService {
 		}
 		user5.setOffers(new HashSet<>(user5Offers));
 
-		// Asignar compras hecas por usuarios -> FALLA
-//		Set<Offer> user10Purchases = new HashSet<>();
-//		user10Purchases.add(user2Offers.get(0));
-//		user10Purchases.add(user2Offers.get(1));
-//		user1.setPurchases(user10Purchases);
-//		
-//		Set<Offer> user20Purchases = new HashSet<>();
-//		user10Purchases.add(user3Offers.get(0));
-//		user10Purchases.add(user3Offers.get(1));
-//		user2.setPurchases(user20Purchases);
-//		
-//		Set<Offer> user30Purchases = new HashSet<>();
-//		user10Purchases.add(user4Offers.get(0));
-//		user10Purchases.add(user4Offers.get(1));
-//		user3.setPurchases(user30Purchases);
-//		
-//		Set<Offer> user40Purchases = new HashSet<>();
-//		user10Purchases.add(user5Offers.get(0));
-//		user10Purchases.add(user5Offers.get(1));
-//		user4.setPurchases(user40Purchases);
-//		
-//		Set<Offer> user50Purchases = new HashSet<>();
-//		user10Purchases.add(user1Offers.get(0));
-//		user10Purchases.add(user1Offers.get(1));
-//		user5.setPurchases(user50Purchases);
-
 		usersService.addUser(user1);
 		usersService.addUser(user2);
 		usersService.addUser(user3);
@@ -298,10 +272,6 @@ public class InsertSampleDataService {
 //		chatsService.deleteChat(chat51);
 //		chatsService.deleteChat(chat52);
 
-	}
-
-	private Message createMessage(Chat chat, User sender, String contenido) {
-		return new Message(chat, sender, contenido);
 	}
 
 }
