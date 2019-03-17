@@ -32,7 +32,7 @@ public class InsertSampleDataService {
 
 	@Autowired
 	private ChatsService chatsService;
-	
+
 	@Autowired
 	private MessagesService messagesService;
 
@@ -133,8 +133,8 @@ public class InsertSampleDataService {
 					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 					add(new Offer("Relicario", "Manifestación material de la voluntad divina", df.parse("2018-01-151"),
 							38.0, user4));
-					add(new Offer("Gaita asturiana", "Fabricación artesanal por Varillas", df.parse("2019-03-03"),
-							50.3, user4));
+					add(new Offer("Gaita asturiana", "Fabricación artesanal por Varillas", df.parse("2019-03-03"), 50.3,
+							user4));
 					add(new Offer("Nokia 3000", "Absolutamente indestructible", null, 20.0, user4));
 				}
 			};
@@ -216,35 +216,37 @@ public class InsertSampleDataService {
 
 		offersService.buyOffer(user5, user1Offers.get(1));
 		offersService.buyOffer(user5, user2Offers.get(2));
-		
+
 		// Añadir chats
 		Chat chat12 = new Chat(user2Offers.get(1), user1);
 		Chat chat13 = new Chat(user3Offers.get(2), user1);
 		chatsService.addChat(chat12);
 		chatsService.addChat(chat13);
-		
-//		Chat chat23 = new Chat(user3Offers.get(1), user2);
-//		Chat chat24 = new Chat(user4Offers.get(2), user2);
-//		chatsService.addChat(chat23);
-//		chatsService.addChat(chat24);
-		
+
 		Chat chat34 = new Chat(user4Offers.get(1), user3);
 		Chat chat35 = new Chat(user5Offers.get(2), user3);
 		chatsService.addChat(chat34);
 		chatsService.addChat(chat35);
-		
+
+		// Chats vacíos
+
+//		Chat chat23 = new Chat(user3Offers.get(1), user2);
+//		Chat chat24 = new Chat(user4Offers.get(2), user2);
+//		chatsService.addChat(chat23);
+//		chatsService.addChat(chat24);
+
 //		Chat chat45 = new Chat(user5Offers.get(1), user4);
 //		Chat chat41 = new Chat(user1Offers.get(2), user4);
 //		chatsService.addChat(chat45);
 //		chatsService.addChat(chat41);
-		
+
 //		Chat chat51 = new Chat(user1Offers.get(1), user5);
 //		Chat chat52 = new Chat(user2Offers.get(2), user5);
 //		chatsService.addChat(chat51);
 //		chatsService.addChat(chat52);
-		
-		// Añadir mensajes a los chats		
-		
+
+		// Añadir mensajes a los chats
+
 		Message message121 = new Message(chat12, user1, "Hola, estoy interesado en tu oferta");
 		Message message122 = new Message(chat12, user2, "Buenas");
 		Message message123 = new Message(chat12, user1, "El precio es negocialbe?");
@@ -253,7 +255,7 @@ public class InsertSampleDataService {
 		messagesService.addMessage(message122);
 		messagesService.addMessage(message123);
 		messagesService.addMessage(message124);
-		
+
 		Message message131 = new Message(chat13, user1, "Te interesa cambio?");
 		Message message132 = new Message(chat13, user3, "No, solo dinero");
 		Message message133 = new Message(chat13, user1, "Vale, entiendo");
@@ -262,7 +264,7 @@ public class InsertSampleDataService {
 		messagesService.addMessage(message132);
 		messagesService.addMessage(message133);
 		messagesService.addMessage(message134);
-		
+
 		Message message341 = new Message(chat34, user3, "Buenos días");
 		Message message342 = new Message(chat34, user4, "Hola");
 		Message message343 = new Message(chat34, user3, "Gran oferta");
@@ -271,7 +273,7 @@ public class InsertSampleDataService {
 		messagesService.addMessage(message342);
 		messagesService.addMessage(message343);
 		messagesService.addMessage(message344);
-		
+
 		Message message351 = new Message(chat35, user3, "El precio es de dos unidades?");
 		Message message352 = new Message(chat35, user5, "De una");
 		Message message353 = new Message(chat35, user3, "vaya");
@@ -280,13 +282,15 @@ public class InsertSampleDataService {
 		messagesService.addMessage(message352);
 		messagesService.addMessage(message353);
 		messagesService.addMessage(message354);
-		
+
 		// Borrado de prueba de chats
-		chatsService.deleteChat(chat12);
-		chatsService.deleteChat(chat13);
-		chatsService.deleteChat(chat34);
-		chatsService.deleteChat(chat35);
-		
+//		chatsService.deleteChat(chat12);
+//		chatsService.deleteChat(chat13);
+//		chatsService.deleteChat(chat34);
+//		chatsService.deleteChat(chat35);
+
+		// Chats vacíos
+
 //		chatsService.deleteChat(chat23);
 //		chatsService.deleteChat(chat24);
 //		chatsService.deleteChat(chat45);
@@ -295,7 +299,7 @@ public class InsertSampleDataService {
 //		chatsService.deleteChat(chat52);
 
 	}
-	
+
 	private Message createMessage(Chat chat, User sender, String contenido) {
 		return new Message(chat, sender, contenido);
 	}

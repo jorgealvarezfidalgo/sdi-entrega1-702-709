@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Transient;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -30,19 +31,19 @@ public class User {
 	@Transient // propiedad que no se almacena e la tabla.
 	private String passwordConfirm;
 
-	@JsonIgnoreProperties("seller")
+	@JsonIgnore
 	@OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
 	private Set<Offer> offers = new HashSet<>();
 
-	@JsonIgnoreProperties("buyer")
+	@JsonIgnore
 	@OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
 	private Set<Offer> purchases = new HashSet<>();
 
-	@JsonIgnoreProperties("creator")
+	@JsonIgnore
 	@OneToMany(mappedBy = "creator", cascade = CascadeType.ALL)
 	private Set<Chat> createdChats  = new HashSet<>();
 
-	@JsonIgnoreProperties("sender")
+	@JsonIgnore
 	@OneToMany(mappedBy = "sender", cascade = CascadeType.ALL)
 	private Set<Message> sendedmessages = new HashSet<>();
 

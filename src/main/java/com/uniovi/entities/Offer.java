@@ -16,6 +16,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -39,7 +40,7 @@ public class Offer {
 	@ManyToOne
 	private User buyer;
 	
-	@JsonIgnoreProperties("offer")
+	@JsonIgnore
 	@OneToMany(mappedBy = "offer", cascade = CascadeType.ALL)
 	private Set<Chat> chats = new HashSet<>();
 
