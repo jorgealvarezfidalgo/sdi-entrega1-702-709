@@ -1,11 +1,6 @@
 package com.uniovi.tests;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import org.junit.After;
 import org.junit.AfterClass;
@@ -20,17 +15,9 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Sleeper;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.uniovi.entities.Offer;
-import com.uniovi.entities.User;
-import com.uniovi.repositories.UsersRepository;
-import com.uniovi.services.InsertSampleDataService;
-import com.uniovi.services.RolesService;
-import com.uniovi.services.UsersService;
 import com.uniovi.tests.pageobjects.PO_HomeView;
 import com.uniovi.tests.pageobjects.PO_LoginView;
 import com.uniovi.tests.pageobjects.PO_PrivateView;
@@ -44,6 +31,7 @@ import com.uniovi.tests.util.SeleniumUtils;
 @SpringBootTest
 public class SdiEntrega1702709Tests {
 
+
 //	@Autowired
 //	private UsersService usersService;
 //	@Autowired
@@ -52,6 +40,7 @@ public class SdiEntrega1702709Tests {
 //	private UsersRepository usersRepository;
 //	@Autowired
 //	private InsertSampleDataService insertDataService;
+
 
 	// En Windows (Debe ser la versión 65.0.1 y desactivar las
 	// actualizacioens automáticas)):

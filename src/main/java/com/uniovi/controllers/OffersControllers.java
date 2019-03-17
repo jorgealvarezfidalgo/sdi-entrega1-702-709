@@ -8,6 +8,8 @@ import java.util.LinkedList;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.data.domain.Page;
@@ -42,6 +44,8 @@ public class OffersControllers {
 
 	@Autowired
 	private OfferFormValidator offerFormValidator;
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping("/offer/listown")
 	public String getList(HttpSession session, Model model, Pageable pageable, Principal principal) {
@@ -49,6 +53,7 @@ public class OffersControllers {
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		
+		log.info("Listing own offers for {}", email);
 		session.setAttribute("saldo", user.getSaldo());
 		model.addAttribute("offerList", offers.getContent());
 		model.addAttribute("page", offers);
@@ -63,6 +68,7 @@ public class OffersControllers {
 		offer.setSeller(user);
 		offerFormValidator.validate(offer, result);
 		if (result.hasErrors()) {
+			log.info("Error adding offer by {}", email);
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 			Date today = new Date(System.currentTimeMillis());
 			String todayAsString = df.format(today);
@@ -70,7 +76,9 @@ public class OffersControllers {
 			model.addAttribute("usersList", usersService.getUsers());
 			return "offer/add";
 		}	
+		log.info("{} creates offer {}", email, offer.getTitle());
 		if(offer.isDestacada()) {
+			log.info("Offer {} has been created as highlighted", offer.getTitle());
 			user.setSaldo(user.getSaldo() - 20);
 			usersService.updateUser(user);
 			session.setAttribute("saldo", user.getSaldo());
@@ -81,8 +89,10 @@ public class OffersControllers {
 	}
 
 	@RequestMapping("/offer/delete/{id}")
-	public String deleteOffer(@PathVariable Long id) {
+	public String deleteOffer(@PathVariable Long id, Principal principal) {
+		String email = principal.getName();
 		offersService.deleteOffer(id);
+		log.info("{} deletes offer {}", email, id);
 		return "redirect:/offer/listown";
 	}
 
@@ -99,6 +109,7 @@ public class OffersControllers {
 		Date today = new Date(System.currentTimeMillis());
 		String todayAsString = df.format(today);
 		model.addAttribute("currentDate", todayAsString);
+		log.info("Loading add form for {}", email);
 		return "offer/add";
 	}
 
@@ -108,6 +119,7 @@ public class OffersControllers {
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
+		log.info("Updating offers table for {}", email);
 		return "offer/list :: tableOffers";
 	}
 
@@ -128,6 +140,7 @@ public class OffersControllers {
 		} else {
 			offers = offersService.getOtherUsersOffers(pageable, buyer);
 		}
+		log.info("{} looking for offers.", email);
 		session.setAttribute("saldo", buyer.getSaldo());
 		model.addAttribute("offerList", offers.getContent());
 		model.addAttribute("page", offers);
@@ -139,6 +152,7 @@ public class OffersControllers {
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOtherUsersOffers(pageable, user);
+		log.info("Updating changes on others' offers list for {}", email);
 		model.addAttribute("offerList", offers.getContent());
 		return "offer/listothers :: tableOffers";
 	}
@@ -149,6 +163,7 @@ public class OffersControllers {
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getHighlightedOffers(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
+		log.info("Updating highlighted offers at {} home.", email);
 		return "home :: tableOffers";
 	}
 
@@ -169,8 +184,11 @@ public class OffersControllers {
 		User buyer = usersService.getUserByEmail(email);
 		Offer offer = offersService.findById(id);
 		if (buyer.getSaldo() >= offer.getCost()) {
+			log.info("{} buys offer {}.", email, id);
 			offersService.buyOffer(buyer, offer);
 			session.setAttribute("saldo", buyer.getSaldo());
+		} else {
+			log.info("{} tries to buy offer {}, but hasn't enough money.", email, id);
 		}
 	}
 
@@ -181,6 +199,7 @@ public class OffersControllers {
 		Page<Offer> purchases = offersService.getOffersBought(pageable, buyer);
 		model.addAttribute("purchasesList", purchases.getContent());
 		model.addAttribute("page", purchases);
+		log.info("{} listing his purchases.", email);
 		return "offer/listpurchases";
 	}
 
@@ -190,6 +209,7 @@ public class OffersControllers {
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
+		log.info("Updating {} purchase list.", email);
 		return "offer/purchaseslist :: tablePurchases";
 	}
 	
@@ -199,16 +219,22 @@ public class OffersControllers {
 		String email = principal.getName();
 		User user = usersService.getUserByEmail(email);
 		if(user.getSaldo() >= 20) {
+			log.info("{} highlights offer {}", email, id);
 			user.setSaldo(user.getSaldo() - 20);
 			session.setAttribute("saldo", user.getSaldo());
 			usersService.updateUser(user);
 			offersService.setOfferHighlight(true, id);
 		}
+		else {
+			log.info("{} tries to highlight offer {}, but hasn't enough money.", email, id);
+		}
 		return "redirect:/offer/listown";
 	}
 
 	@RequestMapping(value = "/offer/{id}/nohighlight", method = RequestMethod.GET)
-	public String setNoHighlight(Model model, @PathVariable Long id) {
+	public String setNoHighlight(Model model, @PathVariable Long id, Principal principal) {
+		String email = principal.getName();
+		log.info("{} removes highlight offer {}", email, id);
 		offersService.setOfferHighlight(false, id);
 		return "redirect:/offer/listown";
 	}
@@ -219,11 +245,13 @@ public class OffersControllers {
 		User user = usersService.getUserByEmail(email);
 		Page<Offer> offers = offersService.getOffersForUser(pageable, user);
 		model.addAttribute("offerList", offers.getContent());
+		log.info("Updating own offers table for {}", email);
 		return "offer/listown :: tableOffers";
 	}
 	
 	@RequestMapping("/offer/reload/saldo")
 	public String updateSaldo(Model model, Pageable pageable, Principal principal) {
+		log.info("Updating saldo for {}", principal.getName());
 		return "offer/listown :: nav";
 	}
 	
