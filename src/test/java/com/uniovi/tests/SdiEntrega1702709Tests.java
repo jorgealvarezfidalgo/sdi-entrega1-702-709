@@ -20,6 +20,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.support.ui.Sleeper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
@@ -27,6 +28,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 import com.uniovi.repositories.UsersRepository;
+import com.uniovi.services.InsertSampleDataService;
 import com.uniovi.services.RolesService;
 import com.uniovi.services.UsersService;
 import com.uniovi.tests.pageobjects.PO_HomeView;
@@ -48,6 +50,8 @@ public class SdiEntrega1702709Tests {
 	private RolesService rolesService;
 	@Autowired
 	private UsersRepository usersRepository;
+	@Autowired
+	private InsertSampleDataService insertDataService;
 
 	// En Windows (Debe ser la versión 65.0.1 y desactivar las
 	// actualizacioens automáticas)):
@@ -73,144 +77,7 @@ public class SdiEntrega1702709Tests {
 
 	public void initDb() {
 		usersRepository.deleteAll();
-
-		User user1 = new User("uo216936@uniovi.es", "Lino", "Menéndez");
-		user1.setPassword("123456");
-		user1.setRole(rolesService.getRoles()[0]);
-		User user2 = new User("cruzadaeterna@gmail.com", "Marshal", "Helbrecht");
-		user2.setPassword("123456");
-		user2.setRole(rolesService.getRoles()[0]);
-		User user3 = new User("armaggedon41@hotmail.com", "Sebastian", "Yarrick");
-		user3.setPassword("123456");
-		user3.setRole(rolesService.getRoles()[0]);
-		User user4 = new User("helsreach@yahoo.es", "Merek", "Grimaldus");
-		user4.setPassword("123456");
-		user4.setRole(rolesService.getRoles()[0]);
-		User user5 = new User("alpha-legion@gmail.com", "Sindri", "Myr");
-		user5.setPassword("123456");
-		user5.setRole(rolesService.getRoles()[0]);
-		User user6 = new User("admin@email.com", "Jorge", "Fidalgo");
-		user6.setPassword("admin");
-		user6.setRole(rolesService.getRoles()[1]);
-
-		Set<Offer> user1Offers = null;
-		try {
-			user1Offers = new HashSet<Offer>() {
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				{
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					add(new Offer("Espada toledana", "Puro acero templado en las forjas de Castilla",
-							df.parse("2018-02-01"), 120.0, user1));
-					add(new Offer("La Comunidad del Anillo", "Por JRR Tolkien, parte de la trilogía de ESDLA",
-							df.parse("2019-03-01"), 20.0, user1));
-					add(new Offer("BMW 320i", "Siempre en garaje. Persona mayor y no fumadora. Muy buen estado", null,
-							3000.0, user1));
-				}
-			};
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		user1.setOffers(user1Offers);
-
-		Set<Offer> user2Offers = null;
-		try {
-			user2Offers = new HashSet<Offer>() {
-
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				{
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					add(new Offer("Guitarra española", "Marca Alhambra", df.parse("2018-03-10"), 165.99, user2));
-					add(new Offer("La Divina Comedia", "Clásico indiscutible de Dante Alighieri",
-							df.parse("2019-03-04"), 25.6, user2));
-					add(new Offer("TES III: Morrowind", "Edición GOTY", null, 15.5, user2));
-				}
-			};
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		user2.setOffers(user2Offers);
-
-		Set<Offer> user3Offers = null;
-		try {
-			user3Offers = new HashSet<Offer>() {
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				{
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					add(new Offer("Cadillac CTS-V", "2005, 250 CV", null, 4500.0, user3));
-					add(new Offer("Paraguas negro", "Ligeramente oxidado", df.parse("2019-03-01"), 4.3, user3));
-					add(new Offer("Motosierra", "Engrasada y lista para la acción.", null, 134.0, user3));
-				}
-			};
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		user3.setOffers(user3Offers);
-
-		Set<Offer> user4Offers = null;
-		try {
-			user1Offers = new HashSet<Offer>() {
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				{
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					add(new Offer("Relicario", "Manifestación material de la voluntad divina", df.parse("2018-01-151"),
-							438.0, user4));
-					add(new Offer("Gaita asturiana", "Fabricación artesanal por Varillas", df.parse("2019-03-03"),
-							1537.3, user4));
-					add(new Offer("Nokia 3000", "Absolutamente indestructible", null, 3000.0, user4));
-				}
-			};
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		user4.setOffers(user4Offers);
-
-		Set<Offer> user5Offers = null;
-		try {
-			user5Offers = new HashSet<Offer>() {
-				/**
-				 * 
-				 */
-				private static final long serialVersionUID = 1L;
-
-				{
-					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-					add(new Offer("Yelmo templario",
-							"Siglo XII. Perteneciente a la Orden de los Pobres Compañeros de Cristo"
-									+ " y del Templo de Salomón. ",
-							df.parse("2018-01-04"), 80.0, user5));
-					add(new Offer("Cheytac Intervención", "Fusil de largo alcance.", df.parse("2019-08-17"), 1876.5,
-							user5));
-					add(new Offer("Libro de salmos ucraniano.", "Encontrado en Pripyat. Ligeramente irradiado.", null,
-							15.0, user5));
-				}
-			};
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
-		user5.setOffers(user5Offers);
-
-		usersService.addUser(user1);
-		usersService.addUser(user2);
-		usersService.addUser(user3);
-		usersService.addUser(user4);
-		usersService.addUser(user5);
-		usersService.addUser(user6);
+		insertDataService.init();
 
 	}
 
@@ -787,6 +654,80 @@ public class SdiEntrega1702709Tests {
 	}
 
 	@Test
+	public void PR31() {
+
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+
+		// Seleccionamos el menú del nav para comprar
+		PO_PrivateView.getElementsAndClick(driver, "//li[contains(@id,  'purchases-menu')]/a", 0);
+		// Y en ese menú la opción de buscar ofertas
+		PO_PrivateView.getElementsAndClick(driver, "//a[contains(@href, 'offer/listothers')]", 0);
+
+		// Escribimos el primer mensaje a una oferta
+		PO_PrivateView.fillSearchOffer(driver, "espada");
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr/td/div/div/a");
+		elementos.get(0).click();
+		PO_PrivateView.fillNewComment(driver, "Hola, bonita espada");
+
+		// Y comrprobamos que está en la lista de mensajes
+		PO_View.checkElement(driver, "text", "bonita espada");
+
+	}
+
+	@Test
+	public void PR32() {
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+
+		// Seleccionamos el menú del nav para ir al listado de chats
+		PO_PrivateView.getElementsAndClick(driver, "//li/a[contains(@href, '/chat/list')]", 0);
+
+		// Hacemos click en una conversación del listado
+		PO_PrivateView.getElementsAndClick(driver, "//tbody/tr/td/a", 0);
+
+		// Comprobamos que no existe el mensaje que vamos a añdir
+		SeleniumUtils.EsperaCargaPagina(driver, "text", "No, lo siento", PO_View.getTimeout());
+		SeleniumUtils.textoNoPresentePagina(driver, "Ya no te interesa?");
+
+		// Y añadimos el nuevo comentario y lo comprobamos
+		PO_PrivateView.fillNewComment(driver, "Ya no te interesa?");
+
+		// Y comrprobamos que está en la lista de mensajes
+		PO_View.checkElement(driver, "text", "Ya no te interesa?");
+
+	}
+
+	@Test
+	public void PR33() {
+
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
+		PO_View.checkElement(driver, "text", "cruzadaeterna@gmail.com");
+
+		// Seleccionamos el menú del nav para ir al listado de chats
+		PO_PrivateView.getElementsAndClick(driver, "//li/a[contains(@href, '/chat/list')]", 0);
+		List<WebElement> elementos = PO_View.checkElement(driver, "free", "//tbody/tr");
+		
+		// Comprobamos que hay el número de chats adecuados
+		Assert.assertTrue(elementos.size() == 4);
+		
+		// Y ques esos elementos son los adecuados
+		PO_View.checkElement(driver, "text", "Clásico indiscutible de Dante Alighieri");
+		PO_View.checkElement(driver, "text", "Ligeramente oxidado");
+		PO_View.checkElement(driver, "text", "Absolutamente indestructible");
+		PO_View.checkElement(driver, "text", "Edición GOTY");
+		
+	}
+
+	@Test
 	public void PR36() {
 		// Vamos al formulario de logueo.
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
@@ -840,7 +781,7 @@ public class SdiEntrega1702709Tests {
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "helsreach@yahoo.es", PO_View.getTimeout());
 
 		PO_View.checkKey(driver, "destacadas.offers", PO_Properties.getSPANISH());
-		
+
 		SeleniumUtils.EsperaCargaPagina(driver, "text", "La Divina Comedia", PO_View.getTimeout());
 
 		PO_View.checkElement(driver, "text", "La Divina Comedia");
@@ -901,7 +842,6 @@ public class SdiEntrega1702709Tests {
 		PO_PrivateView.getElementsAndClick(driver,
 				"//td[contains(text(), 'TES III: Morrowind')]/following-sibling::*/div/div/button[contains(@id, 'highlightButton')]",
 				0);
-
 
 		PO_View.getP();
 		PO_View.checkKey(driver, "Error.saldo", PO_Properties.getSPANISH());

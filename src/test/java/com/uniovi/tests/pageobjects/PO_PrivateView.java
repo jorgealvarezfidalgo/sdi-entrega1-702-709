@@ -43,4 +43,11 @@ public class PO_PrivateView extends PO_NavView {
 		By boton = By.className("btn");    
 		driver.findElement(boton).click();
 	}
+	
+	static public void fillNewComment(WebDriver driver, String content) {
+		WebElement commentField = driver.findElement(By.id("message"));
+		commentField.clear();
+		commentField.sendKeys(content);
+		getElementsAndClick(driver, "//form/button", 0);
+	}
 }

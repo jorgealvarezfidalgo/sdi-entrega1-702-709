@@ -37,4 +37,8 @@ public class ChatsService {
 		chat.setMessages(messagesService.getMessagesForChat(chat));
 		return chat;
 	}
+	
+	public void deleteChat(Chat chat) {
+		chatsRepo.deleteById(chat.getId());
+	}
 }
