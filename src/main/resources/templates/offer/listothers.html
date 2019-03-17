@@ -9,7 +9,7 @@
 
 	<div class="container">
 		<h2 th:text="#{othersoffers.message}"></h2>
-		<p id="errorsaldo" th:text="${errorsaldo}"></p>
+		<p id="errorsaldo" class='text-danger'></p>
 		<form class="navbar-form" action="/offer/listothers">
 			<div class="form-group">
 				<input name="searchText" type="text" id="cuadroBusqueda"
@@ -53,17 +53,22 @@
 									<script th:inline="javascript">
 									/*<![CDATA[*/
 									$( "#buyButton[[${offer.id}]]" ).click(function() {
-										$.get( "/offer/[[${offer.id}]]/buy", function( data ) {
-											var urlUpdate = '/offer/reload/saldo';
-											$("#nav").load(urlUpdate);
-											
-											var numberPage = [[${param.page}]];
-											var urlUpdate = '/offer/listothers/update';
-											if ( numberPage != null ){
-												urlUpdate += "?page="+numberPage[0];
-											}
-											$("#tableOffers").load(urlUpdate);
-										});
+										if([[${session.saldo >= offer.cost}]]) {
+											$.get( "/offer/[[${offer.id}]]/buy", function( data ) {
+												var urlUpdate = '/offer/reload/saldo';
+												$("#nav").load(urlUpdate);
+												
+												var numberPage = [[${param.page}]];
+												var urlUpdate = '/offer/listothers/update';
+												if ( numberPage != null ){
+													urlUpdate += "?page="+numberPage[0];
+												}
+												$("#tableOffers").load(urlUpdate);
+											});
+										} else {
+											$(
+													"#errorsaldo").text([[#{Error.saldo}]]);
+												}
 									});
 									/*]]>*/
 									</script>

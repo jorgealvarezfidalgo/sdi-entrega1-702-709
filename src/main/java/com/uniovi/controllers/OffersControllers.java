@@ -171,8 +171,7 @@ public class OffersControllers {
 		if (buyer.getSaldo() >= offer.getCost()) {
 			offersService.buyOffer(buyer, offer);
 			session.setAttribute("saldo", buyer.getSaldo());
-		} else
-			model.addAttribute("errorsaldo", "saldo insuficiente");
+		}
 	}
 
 	@RequestMapping("/offer/listpurchases")
