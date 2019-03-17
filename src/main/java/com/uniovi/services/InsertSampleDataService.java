@@ -223,25 +223,25 @@ public class InsertSampleDataService {
 		chatsService.addChat(chat12);
 		chatsService.addChat(chat13);
 		
-		Chat chat23 = new Chat(user3Offers.get(1), user2);
-		Chat chat24 = new Chat(user4Offers.get(2), user2);
-		chatsService.addChat(chat23);
-		chatsService.addChat(chat24);
+//		Chat chat23 = new Chat(user3Offers.get(1), user2);
+//		Chat chat24 = new Chat(user4Offers.get(2), user2);
+//		chatsService.addChat(chat23);
+//		chatsService.addChat(chat24);
 		
 		Chat chat34 = new Chat(user4Offers.get(1), user3);
 		Chat chat35 = new Chat(user5Offers.get(2), user3);
 		chatsService.addChat(chat34);
 		chatsService.addChat(chat35);
 		
-		Chat chat45 = new Chat(user5Offers.get(1), user4);
-		Chat chat41 = new Chat(user1Offers.get(2), user4);
-		chatsService.addChat(chat45);
-		chatsService.addChat(chat41);
+//		Chat chat45 = new Chat(user5Offers.get(1), user4);
+//		Chat chat41 = new Chat(user1Offers.get(2), user4);
+//		chatsService.addChat(chat45);
+//		chatsService.addChat(chat41);
 		
-		Chat chat51 = new Chat(user1Offers.get(1), user5);
-		Chat chat52 = new Chat(user2Offers.get(2), user5);
-		chatsService.addChat(chat51);
-		chatsService.addChat(chat52);
+//		Chat chat51 = new Chat(user1Offers.get(1), user5);
+//		Chat chat52 = new Chat(user2Offers.get(2), user5);
+//		chatsService.addChat(chat51);
+//		chatsService.addChat(chat52);
 		
 		// Añadir mensajes a los chats		
 		
@@ -284,14 +284,15 @@ public class InsertSampleDataService {
 		// Borrado de prueba de chats
 		chatsService.deleteChat(chat12);
 		chatsService.deleteChat(chat13);
-		chatsService.deleteChat(chat23);
-		chatsService.deleteChat(chat24);
 		chatsService.deleteChat(chat34);
 		chatsService.deleteChat(chat35);
-		chatsService.deleteChat(chat45);
-		chatsService.deleteChat(chat41);
-		chatsService.deleteChat(chat51);
-		chatsService.deleteChat(chat52);
+		
+//		chatsService.deleteChat(chat23);
+//		chatsService.deleteChat(chat24);
+//		chatsService.deleteChat(chat45);
+//		chatsService.deleteChat(chat41);
+//		chatsService.deleteChat(chat51);
+//		chatsService.deleteChat(chat52);
 
 	}
 	
