@@ -7,6 +7,7 @@
 
 	<div class="container" style="text-align: center">
 		<h2 th:text="#{welcome.message}"></h2>
+		<p id="errorsaldo" class='text-danger'></p>
 		<h3  th:text="#{destacadas.offers}"  sec:authorize="hasRole('ROLE_USER')"></h3>
 		<div class="table-responsive"  sec:authorize="hasRole('ROLE_USER')">
 			<table class="table table-hover" th:fragment="tableOffers"
@@ -34,17 +35,22 @@
 									<script th:inline="javascript">
 									/*<![CDATA[*/
 									$( "#buyButton[[${offer.id}]]" ).click(function() {
-										$.get( "/home/offer/[[${offer.id}]]/buy", function( data ) {
-											var urlUpdate = '/offer/reload/saldo';
-											$("#nav").load(urlUpdate);
-											
-											var numberPage = [[${param.page}]];
-											var urlUpdate = '/home/update';
-											if ( numberPage != null ){
-												urlUpdate += "?page="+numberPage[0];
-											}
-											$("#tableOffers").load(urlUpdate);
-										});
+										if([[${session.saldo >= offer.cost}]]) {
+											$.get( "/home/offer/[[${offer.id}]]/buy", function( data ) {
+												var urlUpdate = '/offer/reload/saldo';
+												$("#nav").load(urlUpdate);
+												
+												var numberPage = [[${param.page}]];
+												var urlUpdate = '/home/update';
+												if ( numberPage != null ){
+													urlUpdate += "?page="+numberPage[0];
+												}
+												$("#tableOffers").load(urlUpdate);
+											});
+										}	else {
+												$(
+														"#errorsaldo").text([[#{Error.saldo}]]);
+													}
 									});
 									/*]]>*/
 									</script>
