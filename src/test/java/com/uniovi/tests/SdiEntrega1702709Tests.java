@@ -71,9 +71,9 @@ public class SdiEntrega1702709Tests {
 
 	// //Común a Windows y a MACOSX
 	static WebDriver driver = getDriver(PathFirefox65, Geckdriver024);
-	static String URLLOCAL = "\"http://localhost:8080\"";
+	static String URLLOCAL = "http://localhost:8080";
 	static String URLREMOTA = "http://35.181.48.225:8080";
-	static String URL = URLREMOTA;
+	static String URL = URLLOCAL;
 	
 
 	public static WebDriver getDriver(String PathFirefox, String Geckdriver) {
@@ -516,38 +516,38 @@ public class SdiEntrega1702709Tests {
 
 	}
 
-//	@Test
-//	public void PR15() {
-//		// Vamos al formulario de logueo.
-//		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
-//		// Rellenamos el formulario
-//		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
-//		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
-//
-//		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
-//
-//		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
-//		String id1 = eliminar.get(1).getAttribute("id").replaceFirst("deleteChk", "");
-//		String id2 = eliminar.get(2).getAttribute("id").replaceFirst("deleteChk", "");
-//		String id3 = eliminar.get(3).getAttribute("id").replaceFirst("deleteChk", "");
-//
-//		User userToDelete1 = usersService.getUser(Long.parseLong(id1, 10));
-//		User userToDelete2 = usersService.getUser(Long.parseLong(id2, 10));
-//		User userToDelete3 = usersService.getUser(Long.parseLong(id3, 10));
-//
-//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete1.getEmail() + "')]");
-//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete2.getEmail() + "')]");
-//		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete3.getEmail() + "')]");
-//		eliminar.get(1).click();
-//		eliminar.get(2).click();
-//		eliminar.get(3).click();
-//
-//		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
-//
-//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete1.getEmail(), PO_View.getTimeout());
-//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete2.getEmail(), PO_View.getTimeout());
-//		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete3.getEmail(), PO_View.getTimeout());
-//	}
+	@Test
+	public void PR15() {
+		// Vamos al formulario de logueo.
+		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
+		// Rellenamos el formulario
+		PO_LoginView.fillForm(driver, "admin@email.com", "admin");
+		PO_HomeView.clickOptionById(driver, "userdropdown", "id", "seeusers");
+
+		PO_HomeView.clickOptionById(driver, "seeusers", "id", "tableUsers");
+
+		List<WebElement> eliminar = PO_View.checkElement(driver, "free", "//input[contains(@id,'deleteChk')]");
+		String id1 = eliminar.get(1).getAttribute("id").replaceFirst("deleteChk", "");
+		String id2 = eliminar.get(2).getAttribute("id").replaceFirst("deleteChk", "");
+		String id3 = eliminar.get(3).getAttribute("id").replaceFirst("deleteChk", "");
+
+		User userToDelete1 = usersService.getUser(Long.parseLong(id1, 10));
+		User userToDelete2 = usersService.getUser(Long.parseLong(id2, 10));
+		User userToDelete3 = usersService.getUser(Long.parseLong(id3, 10));
+
+		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete1.getEmail() + "')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete2.getEmail() + "')]");
+		PO_View.checkElement(driver, "free", "//td[contains(text(), '" + userToDelete3.getEmail() + "')]");
+		eliminar.get(1).click();
+		eliminar.get(2).click();
+		eliminar.get(3).click();
+
+		PO_HomeView.clickOptionById(driver, "deleteButton", "id", "tableUsers");
+
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete1.getEmail(), PO_View.getTimeout());
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete2.getEmail(), PO_View.getTimeout());
+		SeleniumUtils.EsperaCargaPaginaNoTexto(driver, userToDelete3.getEmail(), PO_View.getTimeout());
+	}
 
 	@Test
 	public void PR16() {
@@ -903,13 +903,13 @@ public class SdiEntrega1702709Tests {
 
 	@Test
 	public void PR28() {
-		driver.navigate().to("http://localhost:8080/user/list");
+		driver.navigate().to(URL + "/user/list");
 		SeleniumUtils.EsperaCargaPagina(driver, "id", "loginbtn", PO_View.getTimeout());
 	}
 
 	@Test
 	public void PR29() {
-		driver.navigate().to("http://localhost:8080/offer/listown");
+		driver.navigate().to(URL + "/offer/listown");
 		SeleniumUtils.EsperaCargaPagina(driver, "id", "loginbtn", PO_View.getTimeout());
 	}
 
@@ -919,7 +919,7 @@ public class SdiEntrega1702709Tests {
 		PO_HomeView.clickOption(driver, "login", "class", "btn btn-primary");
 		PO_LoginView.fillForm(driver, "cruzadaeterna@gmail.com", "123456");
 
-		driver.navigate().to("http://localhost:8080/user/list");
+		driver.navigate().to(URL + "/user/list");
 		PO_View.checkKey(driver, "forbidden.message", PO_Properties.getSPANISH());
 	}
 
