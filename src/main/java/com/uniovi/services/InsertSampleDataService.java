@@ -132,7 +132,7 @@ public class InsertSampleDataService {
 				{
 					DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 					add(new Offer("Relicario", "Manifestación material de la voluntad divina", df.parse("2018-01-151"),
-							38.0, user4));
+							1000.0, user4));
 					add(new Offer("Gaita asturiana", "Fabricación artesanal por Varillas", df.parse("2019-03-03"), 50.3,
 							user4));
 					add(new Offer("Nokia 3000", "Absolutamente indestructible", null, 20.0, user4));
