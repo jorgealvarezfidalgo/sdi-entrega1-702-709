@@ -4,6 +4,8 @@ import java.security.Principal;
 
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -11,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.uniovi.entities.Chat;
@@ -37,6 +38,8 @@ public class ChatsController {
 	
 	@Autowired
 	private MessagesService messagesService;
+	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
 
 	@RequestMapping("/chat/list")
 	public String getList(HttpSession session, Model model, Pageable pageable, Principal principal) {
@@ -44,14 +47,16 @@ public class ChatsController {
 		User user = usersService.getUserByEmail(email);
 		Page<Chat> chats = chatsService.getChatsForUser(pageable, user);
 
+		log.info("{} listing his chats.", email);
 		model.addAttribute("chatList", chats.getContent());
 		model.addAttribute("page", chats);
 		return "chat/list";
 	}
 
 	@RequestMapping("/chat/chat/{id}")
-	public String getChat(Model model, @PathVariable Long id) {
+	public String getChat(Model model, @PathVariable Long id, Principal principal) {
 		model.addAttribute("chat", chatsService.getChat(id));
+		log.info("{} opens chat {}.", principal.getName(), id);
 		return "chat/chat";
 	}
 
@@ -63,6 +68,7 @@ public class ChatsController {
 		Chat newChat = new Chat(offer, creator);
 		chatsService.addChat(newChat);
 		long chatId = newChat.getId();
+		log.info("Creating chat {}", chatId);
 		model.addAttribute("chat", newChat);
 		return "redirect:/chat/chat/" + chatId;
 	}
@@ -74,6 +80,7 @@ public class ChatsController {
 		User sender = usersService.getUserByEmail(email);
 		Chat chat = chatsService.getChat(id);
 		Message newMessage = new Message(chat, sender, messageText);
+		log.info("New message at chat {}", id);
 		messagesService.addMessage(newMessage);
 		return "redirect:/chat/chat/" + id; 
 	}

@@ -1,11 +1,11 @@
 package com.uniovi.controllers;
 
-import java.security.Principal;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -46,11 +46,14 @@ public class UsersController {
 	@Autowired
 	private SecurityService securityService;
 	
+	private final Logger log = LoggerFactory.getLogger(this.getClass());
+	
 	@RequestMapping("/user/list")
 	public String getListado(Model model, Pageable pageable) {
 		Page<User> users = usersService.getUsers(pageable);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
+		log.info("Administrador {} lista usuarios.", email);
 		model.addAttribute("email", email);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
@@ -63,6 +66,7 @@ public class UsersController {
 		Page<User> users = usersService.getUsers(pageable);
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
+		log.info("Administrador {} borra al usuario {}", email, id);
 		model.addAttribute("email", email);
 		model.addAttribute("usersList", users.getContent());
 		model.addAttribute("page", users);
@@ -81,6 +85,7 @@ public class UsersController {
 		if (result.hasErrors()) {
 			return "signup";
 		}
+		log.info("Usuario registrado con email {}, nombre {} y apellidos {}.", user.getEmail(), user.getName(), user.getLastName());
 
 		user.setRole(rolesService.getRoles()[0]);
 		user.setSaldo(100);
@@ -100,6 +105,7 @@ public class UsersController {
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		String email = auth.getName();
 		User activeUser = usersService.getUserByEmail(email);
+		log.info("{} accede a Home.", email);
 		Page<Offer> offers = offersService.getHighlightedOffers(pageable, activeUser);
 		model.addAttribute("offerList", offers.getContent());
 		model.addAttribute("page", offers);
@@ -111,6 +117,7 @@ public class UsersController {
 	public String logoutPage (HttpServletRequest request, HttpServletResponse response) {
 	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 	    if (auth != null){    
+	    	log.info("{} cierra sesión.", auth.getName());
 	        new SecurityContextLogoutHandler().logout(request, response, auth);
 	    }
 	    return "redirect:login";
@@ -118,6 +125,9 @@ public class UsersController {
 	
 	@RequestMapping(value="/403", method = RequestMethod.GET)
 	public String denyAccess() {
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		String email = auth.getName();
+		log.info("{} intenta acceder a un recurso prohibido.", email);
 		return "accessdenied";
 	}
 }
