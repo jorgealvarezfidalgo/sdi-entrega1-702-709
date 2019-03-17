@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.annotation.PostConstruct;
 
@@ -298,10 +297,6 @@ public class InsertSampleDataService {
 //		chatsService.deleteChat(chat51);
 //		chatsService.deleteChat(chat52);
 
-	}
-
-	private Message createMessage(Chat chat, User sender, String contenido) {
-		return new Message(chat, sender, contenido);
 	}
 
 }

@@ -6,7 +6,6 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 
 import com.uniovi.entities.Chat;
-import com.uniovi.entities.Offer;
 import com.uniovi.entities.User;
 
 public interface ChatsRepository extends CrudRepository<Chat, Long> {
