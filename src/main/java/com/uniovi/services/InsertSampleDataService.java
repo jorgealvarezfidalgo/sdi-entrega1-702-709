@@ -7,8 +7,6 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
-import javax.annotation.PostConstruct;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -35,7 +33,6 @@ public class InsertSampleDataService {
 	@Autowired
 	private MessagesService messagesService;
 
-	@PostConstruct
 	public void init() {
 		User user1 = new User("uo216936@uniovi.es", "Lino", "Menéndez");
 		user1.setPassword("123456");
